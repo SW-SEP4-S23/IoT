@@ -123,9 +123,20 @@ int main(void)
 	printf("Program Started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
 
+	lora_driver_payload_t uplink_payload;
+	uplink_payload.len= 3; // Length of the actual payload
+	uplink_payload.portNo= 1; // The LoRaWANport no to sent the message to
+	uplink_payload.bytes[0] = hum; 
+	uplink_payload.bytes[1] = temp & 0x00FF;
+	uplink_payload.bytes[2] = temp >> 8;
+	//And send it like this:
+	rc= lora_driver_sendUploadMessage(false, &uplink_payload)
+
+
 	/* Replace with your application code */
 	while (1)
 	{
+
 	}
 }
 
