@@ -8,11 +8,13 @@
 
 #include <stdio.h>
 #include <avr/io.h>
+#include <avr/sfr_defs.h>
+
+#include <FreeRTOSTraceDriver.h>
 
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
-
 #include <stdio_driver.h>
 #include <serial.h>
 
@@ -22,7 +24,7 @@
 
 // define two Tasks
 void task1( void *pvParameters );
-void task2( void *pvParameters );
+void task3 ( void *pvParameters );
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
@@ -54,12 +56,38 @@ void create_tasks_and_semaphores(void)
 	,  NULL );
 
 	xTaskCreate(
-	task2
-	,  "Task2"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
+	task3
+	,  "Task3"
+	,  configMINIMAL_STACK_SIZE
 	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+	,  3
+	,  NULL
+	);
+}
+
+/*-----------------------------------------------------------*/
+void task3( void *pvParameters ) {
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 300000/portTICK_PERIOD_MS;
+
+	xLastWakeTime = xTaskGetTickCount();
+
+	for(;;) {
+		puts("Task3");
+
+		lora_driver_payload_t uplink_payload;
+		uplink_payload.len= 3; // Length of the actual payload
+		uplink_payload.portNo= 1; // The LoRaWANport no to sent the message to
+		uplink_payload.bytes[0] = 20;
+		uplink_payload.bytes[1] = 69;
+		// uplink_payload.bytes[1] = 69 & 0x00FF;
+		uplink_payload.bytes[2] = 45;
+		//uplink_payload.bytes[2] = 45 >> 8;
+		//And send it like this:
+		lora_driver_sendUploadMessage(false, &uplink_payload);
+		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+	}
+
 }
 
 /*-----------------------------------------------------------*/
@@ -80,28 +108,14 @@ void task1( void *pvParameters )
 }
 
 /*-----------------------------------------------------------*/
-void task2( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; // 1000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task2"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA7);
-	}
-}
-
-/*-----------------------------------------------------------*/
 void initialiseSystem()
 {
 	// Set output ports for leds used in the example
 	DDRA |= _BV(DDA0) | _BV(DDA7);
-
+	
+	// initialise trace driver
+	trace_init();
+	
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
@@ -120,23 +134,13 @@ void initialiseSystem()
 int main(void)
 {
 	initialiseSystem(); // Must be done as the very first thing!!
-	printf("Program Started!!\n");
+	printf("Program started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
-
-	lora_driver_payload_t uplink_payload;
-	uplink_payload.len= 3; // Length of the actual payload
-	uplink_payload.portNo= 1; // The LoRaWANport no to sent the message to
-	uplink_payload.bytes[0] = hum; 
-	uplink_payload.bytes[1] = temp & 0x00FF;
-	uplink_payload.bytes[2] = temp >> 8;
-	//And send it like this:
-	rc= lora_driver_sendUploadMessage(false, &uplink_payload)
-
 
 	/* Replace with your application code */
 	while (1)
 	{
-
+		
 	}
 }
 
