@@ -20,6 +20,9 @@
 #include <lora_driver.h>
 #include <status_leds.h>
 
+// Needed for HIH8120 driver initialization
+#include <hih8120.h>
+
 // define two Tasks
 void task1( void *pvParameters );
 void task3 ( void *pvParameters );
@@ -117,6 +120,15 @@ void initialiseSystem()
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
+	
+	// Initialise HIH8120 driver
+	if ( HIH8120_OK == hih8120_initialise() )
+	{
+		// Driver initialised OK
+		// Always check what hih8120_initialise() returns
+	}
+	
+	
 	create_tasks_and_semaphores();
 
 	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -134,6 +146,8 @@ int main(void)
 	initialiseSystem(); // Must be done as the very first thing!!
 	printf("Program started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
+
+	
 
 	/* Replace with your application code */
 	while (1)
