@@ -9,9 +9,7 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <avr/sfr_defs.h>
-
 #include <FreeRTOSTraceDriver.h>
-
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
