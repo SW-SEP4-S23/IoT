@@ -264,11 +264,6 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "Firmware0_1.elf"
 	
 	
-
-
-
-
-
 # Other Targets
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
