@@ -15,6 +15,7 @@
 #include <semphr.h>
 #include <stdio_driver.h>
 #include <serial.h>
+#include <time.h>
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -63,11 +64,17 @@ void create_tasks_and_semaphores(void)
 		NULL);
 
 	xTaskCreate(
-		task3, "Task3", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+		sendData, 
+		"sendData", 
+		configMINIMAL_STACK_SIZE, 
+		NULL, 
+		3, 
+		NULL
+		);
 }
 
 /*-----------------------------------------------------------*/
-void task3(void *pvParameters)
+void sendData(void *pvParameters)
 {
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
@@ -76,7 +83,10 @@ void task3(void *pvParameters)
 
 	for (;;)
 	{
-		puts("Task3");
+		time_t t = time(null);
+  		struct tm tm = *localtime(&t);
+		puts("Uploading Message.");
+  		puts("now: %d-%02d-%02d %02d:%02d:%02d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
 		lora_driver_payload_t uplink_payload;
 		uplink_payload.len = 3;	   // Length of the actual payload
@@ -87,6 +97,7 @@ void task3(void *pvParameters)
 		uplink_payload.bytes[2] = 45;
 		// uplink_payload.bytes[2] = 45 >> 8;
 		// And send it like this:
+		lora_driver_re
 		lora_driver_sendUploadMessage(false, &uplink_payload);
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 	}
