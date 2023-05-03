@@ -28,6 +28,8 @@
 // Needed for MHZ19 driver initialization
 #include <mh_z19.h>
 
+#include "SensorReading.h"
+
 // define Tasks
 void sendData(void *pvParameters);
 
@@ -75,44 +77,11 @@ void sendData(void *pvParameters)
 
 	for (;;)
 	{
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		float temperature;
-		uint16_t *CO2 = 0;
-		float humidity;
+		
+		float data[3] = {0,0,0};
 
-		// CO2 return code.
-		mh_z19_returnCode_t rc;
-
-		if (HIH8120_OK != hih8120_wakeup())
-		{
-			printf("Could not wake up HIH8120 driver.\n");
-		}
-
-		_delay_ms(60);
-
-		if (HIH8120_OK != hih8120_measure())
-		{
-			printf("Could not measure from HIH8120 driver.\n");
-		}
-		else
-		{
-			printf("Reading Humidity and Temperature.\n");
-		}
-		while (hih8120_isReady())
-		{
-			_delay_ms(60);
-		}
-
-		temperature = hih8120_getHumidity();
-		humidity = hih8120_getTemperature();
-
-		rc = mh_z19_takeMeassuring();
-		if (rc != MHZ19_OK)
-		{
-			printf("Could not measure ");
-		}
-
-		mh_z19_getCo2Ppm(CO2);
+		sensor_getSensorData(data);
+		
 
 		puts("Uploading values");
 		lora_driver_payload_t uplink_payload;
@@ -120,9 +89,9 @@ void sendData(void *pvParameters)
 		uplink_payload.len = 3;	   // Length of the actual payload
 		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
 
-		uplink_payload.bytes[0] = temperature;
-		uplink_payload.bytes[1] = *CO2;
-		uplink_payload.bytes[2] = humidity;
+		uplink_payload.bytes[0] = data[0];
+		uplink_payload.bytes[1] = data[1];
+		uplink_payload.bytes[2] = data[2];
 
 		lora_driver_sendUploadMessage(false, &uplink_payload);
 	}
@@ -144,27 +113,8 @@ void initialiseDrivers()
 	mh_z19_initialise(ser_USART3);
 }
 
-/*
-
-TEMPLATE TASK
-
-void task1(void *pvParameters)
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 500 / portTICK_PERIOD_MS; // 500 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for (;;)
-	{
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA0);
-	}
-}
-*/
 /*-----------------------------------------------------------*/
+
 void initialiseSystem()
 {
 	// Set output ports for leds used in the example
