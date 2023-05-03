@@ -28,8 +28,6 @@
 #include <mh_z19.h>
 
 // define Tasks
-
-void task1(void *pvParameters);
 void sendData(void *pvParameters);
 
 // define semaphore handle
@@ -58,7 +56,8 @@ void create_tasks_and_semaphores(void)
 	}
 
 	xTaskCreate(
-		task1, "Task1" // A name just for humans
+		task1, 
+		"Task1" // A name just for humans
 		,
 		configMINIMAL_STACK_SIZE // This stack size can be checked & adjusted by reading the Stack Highwater
 		,
@@ -67,11 +66,16 @@ void create_tasks_and_semaphores(void)
 		NULL);
 
 	xTaskCreate(
-		sendData,
-		"sendData",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		3,
+		sendData
+		,
+		"sendData"
+		,
+		configMINIMAL_STACK_SIZE
+		,
+		NULL
+		,
+		3
+		,
 		NULL);
 }
 
@@ -153,7 +157,10 @@ void initialiseDrivers(void *pvParameters)
 	mh_z19_initialise(ser_USART3);
 }
 
-/*-----------------------------------------------------------*/
+/*
+
+TEMPLATE TASK
+
 void task1(void *pvParameters)
 {
 	TickType_t xLastWakeTime;
@@ -169,7 +176,7 @@ void task1(void *pvParameters)
 		PORTA ^= _BV(PA0);
 	}
 }
-
+*/
 /*-----------------------------------------------------------*/
 void initialiseSystem()
 {
