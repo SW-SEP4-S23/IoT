@@ -16,6 +16,7 @@
 #include <stdio_driver.h>
 #include <serial.h>
 #include <time.h>
+#include <util/delay.h>
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -87,6 +88,8 @@ void sendData(void *pvParameters)
 			printf("Could not wake up HIH8120 driver.\n");
 		}
 
+		_delay_ms(60);
+
 		if (HIH8120_OK != hih8120_measure())
 		{
 			printf("Could not measure from HIH8120 driver.\n");
@@ -95,9 +98,9 @@ void sendData(void *pvParameters)
 		{
 			printf("Reading Humidity and Temperature.\n");
 		}
-
 		while (hih8120_isReady())
 		{
+			_delay_ms(60);
 		}
 
 		temperature = hih8120_getHumidity();
