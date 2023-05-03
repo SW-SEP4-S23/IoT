@@ -190,6 +190,9 @@ void initialiseSystem()
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
 
+	// initialiseDrivers - handles driver initailazation for modules HIH8120, MH-Z19
+	initialiseDrivers();
+
 	create_tasks_and_semaphores();
 
 	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
