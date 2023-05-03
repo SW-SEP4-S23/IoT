@@ -1,0 +1,1 @@
+float *sensor_getSensorData();
