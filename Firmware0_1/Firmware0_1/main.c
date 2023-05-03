@@ -56,26 +56,11 @@ void create_tasks_and_semaphores(void)
 	}
 
 	xTaskCreate(
-		task1, 
-		"Task1" // A name just for humans
-		,
-		configMINIMAL_STACK_SIZE // This stack size can be checked & adjusted by reading the Stack Highwater
-		,
-		NULL, 2 // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-		,
-		NULL);
-
-	xTaskCreate(
-		sendData
-		,
-		"sendData"
-		,
-		configMINIMAL_STACK_SIZE
-		,
-		NULL
-		,
-		3
-		,
+		sendData,
+		"sendData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		3,
 		NULL);
 }
 
@@ -89,24 +74,25 @@ void sendData(void *pvParameters)
 
 	for (;;)
 	{
-
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 		float temperature;
-		uint16_t* CO2;
+		uint16_t *CO2;
 		float humidity;
 
 		// CO2 return code.
 		mh_z19_returnCode_t rc;
 
-		if ( HIH8120_OK != hih8120_wakeup() )
+		if (HIH8120_OK != hih8120_wakeup())
 		{
-       		printf("Could not wake up HIH8120 driver.\n");	
+			printf("Could not wake up HIH8120 driver.\n");
 		}
 
-		if ( HIH8120_OK !=  hih8120_measure() )
+		if (HIH8120_OK != hih8120_measure())
 		{
 			printf("Could not measure from HIH8120 driver.\n");
 		}
-		else {
+		else
+		{
 			printf("Reading Humidity and Temperature.\n");
 		}
 
@@ -121,13 +107,13 @@ void sendData(void *pvParameters)
 		rc = mh_z19_takeMeassuring();
 		if (rc != OK)
 		{
-		    printf("Could not measure ");
+			printf("Could not measure ");
 		}
 
 		mh_z19_getCo2Ppm(CO2);
 
 		puts("Uploading values")
-		lora_driver_payload_t uplink_payload;
+			lora_driver_payload_t uplink_payload;
 		// Setting up amount of data points
 		uplink_payload.len = 3;	   // Length of the actual payload
 		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
