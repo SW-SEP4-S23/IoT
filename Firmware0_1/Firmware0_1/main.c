@@ -76,7 +76,7 @@ void sendData(void *pvParameters)
 	{
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 		float temperature;
-		uint16_t *CO2;
+		uint16_t *CO2 = 0;
 		float humidity;
 
 		// CO2 return code.
@@ -98,22 +98,21 @@ void sendData(void *pvParameters)
 
 		while (hih8120_isReady())
 		{
-			sleep(0.06);
 		}
 
 		temperature = hih8120_getHumidity();
 		humidity = hih8120_getTemperature();
 
 		rc = mh_z19_takeMeassuring();
-		if (rc != OK)
+		if (rc != MHZ19_OK)
 		{
 			printf("Could not measure ");
 		}
 
 		mh_z19_getCo2Ppm(CO2);
 
-		puts("Uploading values")
-			lora_driver_payload_t uplink_payload;
+		puts("Uploading values");
+		lora_driver_payload_t uplink_payload;
 		// Setting up amount of data points
 		uplink_payload.len = 3;	   // Length of the actual payload
 		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
@@ -128,11 +127,8 @@ void sendData(void *pvParameters)
 
 /*-----------------------------------------------------------*/
 
-void initialiseDrivers(void *pvParameters)
+void initialiseDrivers()
 {
-
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 500 / portTICK_PERIOD_MS;
 
 	// HIH8120 initialization
 	if (HIH8120_OK == hih8120_initialise())
