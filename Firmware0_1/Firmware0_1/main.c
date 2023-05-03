@@ -24,7 +24,11 @@
 // Needed for HIH8120 driver initialization
 #include <hih8120.h>
 
+// Needed for MHZ19 driver initialization
+#include <mh_z19.h>
+
 // define Tasks
+
 void task1(void *pvParameters);
 void sendData(void *pvParameters);
 
@@ -63,13 +67,12 @@ void create_tasks_and_semaphores(void)
 		NULL);
 
 	xTaskCreate(
-		sendData, 
-		"sendData", 
-		configMINIMAL_STACK_SIZE, 
-		NULL, 
-		3, 
-		NULL
-		);
+		sendData,
+		"sendData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		3,
+		NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -82,8 +85,6 @@ void sendData(void *pvParameters)
 
 	for (;;)
 	{
-
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
 		float temperature;
 		uint16_t* CO2;
@@ -134,6 +135,25 @@ void sendData(void *pvParameters)
 }
 
 /*-----------------------------------------------------------*/
+
+void initialiseDrivers(void *pvParameters)
+{
+
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 500 / portTICK_PERIOD_MS;
+
+	// HIH8120 initialization
+	if (HIH8120_OK == hih8120_initialise())
+	{
+		// Driver initialised OK
+		// Always check what hih8120_initialise() returns
+	}
+
+	// // MH-Z19 initialization (default USART port is USART3)
+	mh_z19_initialise(ser_USART3);
+}
+
+/*-----------------------------------------------------------*/
 void task1(void *pvParameters)
 {
 	TickType_t xLastWakeTime;
@@ -163,12 +183,8 @@ void initialiseSystem()
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
 
-	// Initialise HIH8120 driver
-	if (HIH8120_OK == hih8120_initialise())
-	{
-		// Driver initialised OK
-		// Always check what hih8120_initialise() returns
-	}
+	// initialiseDrivers - handles driver initailazation for modules HIH8120, MH-Z19
+	initialiseDrivers();
 
 	create_tasks_and_semaphores();
 
