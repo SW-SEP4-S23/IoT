@@ -24,6 +24,9 @@
 // Needed for HIH8120 driver initialization
 #include <hih8120.h>
 
+// Needed for MHZ19 driver initialization
+#include <mh_z19.h>
+
 // define three Tasks
 void task1(void *pvParameters);
 void task2(void *pvParameters);
@@ -64,13 +67,12 @@ void create_tasks_and_semaphores(void)
 		NULL);
 
 	xTaskCreate(
-		sendData, 
-		"sendData", 
-		configMINIMAL_STACK_SIZE, 
-		NULL, 
-		3, 
-		NULL
-		);
+		sendData,
+		"sendData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		3,
+		NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -84,9 +86,9 @@ void sendData(void *pvParameters)
 	for (;;)
 	{
 		time_t t = time(null);
-  		struct tm tm = *localtime(&t);
+		struct tm tm = *localtime(&t);
 		puts("Uploading Message.");
-  		puts("now: %d-%02d-%02d %02d:%02d:%02d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+		puts("now: %d-%02d-%02d %02d:%02d:%02d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
 		lora_driver_payload_t uplink_payload;
 		uplink_payload.len = 3;	   // Length of the actual payload
@@ -98,11 +100,30 @@ void sendData(void *pvParameters)
 		// uplink_payload.bytes[2] = 45 >> 8;
 		// And send it like this:
 		lora_driver_re
-		lora_driver_sendUploadMessage(false, &uplink_payload);
+			lora_driver_sendUploadMessage(false, &uplink_payload);
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 	}
 }
-//*-----------------------------------------------------------*
+/*-----------------------------------------------------------*/
+
+void initialiseDrivers(void *pvParameters)
+{
+
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 500 / portTICK_PERIOD_MS;
+
+	// HIH8120 initialization
+	if (HIH8120_OK == hih8120_initialise())
+	{
+		// Driver initialised OK
+		// Always check what hih8120_initialise() returns
+	}
+
+	// // MH-Z19 initialization (default USART port is USART3)
+	mh_z19_initialise(ser_USART3);
+}
+
+/*-----------------------------------------------------------*/
 
 void task2(void *pvParameters)
 {
@@ -168,13 +189,6 @@ void initialiseSystem()
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
-
-	// Initialise HIH8120 driver
-	if (HIH8120_OK == hih8120_initialise())
-	{
-		// Driver initialised OK
-		// Always check what hih8120_initialise() returns
-	}
 
 	create_tasks_and_semaphores();
 
