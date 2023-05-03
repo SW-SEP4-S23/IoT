@@ -106,13 +106,15 @@ void sendData(void *pvParameters)
 		{
 			printf("Could not measure from HIH8120 driver.\n");
 		}
+		else {
+			printf("Reading Humidity and Temperature.\n");
+		}
 
 		while (hih8120_isReady())
 		{
 			sleep(0.06);
 		}
-		
-		printf("Reading Humidity and Temperature.\n");
+
 		temperature = hih8120_getHumidity();
 		humidity = hih8120_getTemperature();
 
@@ -124,7 +126,7 @@ void sendData(void *pvParameters)
 
 		mh_z19_getCo2Ppm(CO2);
 
-		puts("Uploading values %d, %d, %d", temperature, *CO2, humidity)
+		puts("Uploading values")
 		lora_driver_payload_t uplink_payload;
 		// Setting up amount of data points
 		uplink_payload.len = 3;	   // Length of the actual payload
