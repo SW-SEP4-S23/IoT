@@ -1,5 +1,13 @@
 # IoT
 
+## Interface
+
+| Type        | Description | Position    |
+| ----------- | ----------- | ----------- |
+| Float       | Temperature | 0           |
+| Float       | CO2         | 1           |
+| Float       | Humidity    | 2           |
+
 ## Setup
 
 When setting up the project it is crucial that one initialises the submodules after cloning the project.
