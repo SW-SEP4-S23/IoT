@@ -76,26 +76,32 @@ void sendData(void *pvParameters)
 	xLastWakeTime = xTaskGetTickCount();
 
 	for (;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		
-		float data[3] = {0,0,0};
+    {
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
-		sensor_getSensorData(data);
-		
+        puts("Uploading values");
+        lora_driver_payload_t uplink_payload;
+        // Setting up amount of data points
+        uplink_payload.len = 3;       // Length of the actual payload
+        uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
 
-		puts("Uploading values");
-		lora_driver_payload_t uplink_payload;
-		// Setting up amount of data points
-		uplink_payload.len = 3;	   // Length of the actual payload
-		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
+        // Hvis man placerede float Data[3] uden for for-loopet, ville man så ikke kunne undgå at bruge memory management på det?
+        
+        // Reading the sensor data
+        float *data = (float*) pvPortMalloc(uplink_payload.len * sizeof(float));
 
-		uplink_payload.bytes[0] = data[0];
-		uplink_payload.bytes[1] = data[1];
-		uplink_payload.bytes[2] = data[2];
+        sensor_getSensorData(data);
 
-		lora_driver_sendUploadMessage(false, &uplink_payload);
-	}
+        // Saving sensor data to the uplink
+        uplink_payload.bytes[0] = data[0];
+        uplink_payload.bytes[1] = data[1];
+        uplink_payload.bytes[2] = data[2];
+
+        // Sending uplink message.
+        lora_driver_sendUploadMessage(false, &uplink_payload);
+
+        vPortFree(data);
+    }
 }
 
 /*-----------------------------------------------------------*/
