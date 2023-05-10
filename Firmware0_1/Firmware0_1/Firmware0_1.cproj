@@ -291,6 +291,12 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="sensor\SensorReading.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sensor\SensorReading.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="drivers\" />
@@ -299,6 +305,7 @@
     <Folder Include="FreeRTOS\Example\" />
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
+    <Folder Include="sensor\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">

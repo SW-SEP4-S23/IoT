@@ -38,7 +38,8 @@ SUBDIRS :=  \
 ../FreeRTOS/ \
 ../FreeRTOS/Example/ \
 ../FreeRTOS/FreeRTOSTraceDriver/ \
-../FreeRTOS/src/
+../FreeRTOS/src/ \
+../sensor/
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -55,6 +56,7 @@ C_SRCS +=  \
 ../FreeRTOS/src/timers.c \
 ../FreeRTOS/src/variantHooks.c \
 ../main.c \
+../sensor/SensorReading.c \
 ../LoRaWANHandler.c
 
 
@@ -77,6 +79,7 @@ FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 main.o \
+sensor/SensorReading.o \
 LoRaWANHandler.o
 
 OBJS_AS_ARGS +=  \
@@ -92,6 +95,7 @@ FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 main.o \
+sensor/SensorReading.o \
 LoRaWANHandler.o
 
 C_DEPS +=  \
@@ -107,6 +111,7 @@ FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 main.d \
+sensor/SensorReading.d \
 LoRaWANHandler.d
 
 C_DEPS_AS_ARGS +=  \
@@ -122,6 +127,7 @@ FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 main.d \
+sensor/SensorReading.d \
 LoRaWANHandler.d
 
 OUTPUT_FILE_PATH +=Firmware0_1.elf
@@ -216,6 +222,13 @@ FreeRTOS/src/variantHooks.o: ../FreeRTOS/src/variantHooks.c
 	
 
 ./main.o: .././main.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+sensor/SensorReading.o: ../sensor/SensorReading.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
