@@ -28,7 +28,7 @@
 // Needed for MHZ19 driver initialization
 #include <mh_z19.h>
 
-#include "SensorReading.h"
+#include "sensor/SensorReading.h"
 
 // define Tasks
 void sendData(void *pvParameters);
@@ -77,6 +77,7 @@ void sendData(void *pvParameters)
 
 	for (;;)
 	{
+		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		
 		float data[3] = {0,0,0};
 

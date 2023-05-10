@@ -1,1 +1,1 @@
-float *sensor_getSensorData();
+void *sensor_getSensorData();

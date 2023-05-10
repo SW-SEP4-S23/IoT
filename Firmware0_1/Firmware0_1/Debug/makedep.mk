@@ -26,5 +26,7 @@ FreeRTOS\src\variantHooks.c
 
 main.c
 
+sensor\SensorReading.c
+
 LoRaWANHandler.c
 
