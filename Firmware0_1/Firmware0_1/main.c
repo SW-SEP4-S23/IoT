@@ -17,31 +17,32 @@
 #include <serial.h>
 #include <time.h>
 #include <util/delay.h>
+#include "Handlers//7segmentHandler.h"
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
 #include <status_leds.h>
-
+#include <util/delay.h>
 // Needed for HIH8120 driver initialization
 #include <hih8120.h>
 
 // Needed for MHZ19 driver initialization
 #include <mh_z19.h>
 
+// Needed for 7-segment driver initialization
+#include <display_7seg.h>
+
 #include "sensor/SensorReading.h"
 
 // define Tasks
 void sendData(void *pvParameters);
+void task1(void *pvParameters);
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
-
-// Global variabels
-float humidity = 0.0;
-float temperature = 0.0;
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
@@ -65,6 +66,14 @@ void create_tasks_and_semaphores(void)
 		NULL,
 		3,
 		NULL);
+
+	xTaskCreate(
+		task1,
+		"task1",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		2,
+		NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -76,32 +85,52 @@ void sendData(void *pvParameters)
 	xLastWakeTime = xTaskGetTickCount();
 
 	for (;;)
-    {
-        xTaskDelayUntil(&xLastWakeTime, xFrequency);
+	{
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
-        puts("Uploading values");
-        lora_driver_payload_t uplink_payload;
-        // Setting up amount of data points
-        uplink_payload.len = 3;       // Length of the actual payload
-        uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
+		puts("Uploading values");
+		lora_driver_payload_t uplink_payload;
+		// Setting up amount of data points
+		uplink_payload.len = 3;	   // Length of the actual payload
+		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
 
-        // Hvis man placerede float Data[3] uden for for-loopet, ville man så ikke kunne undgå at bruge memory management på det?
-        
-        // Reading the sensor data
-        float *data = (float*) pvPortMalloc(uplink_payload.len * sizeof(float));
+		// Hvis man placerede float Data[3] uden for for-loopet, ville man sï¿½ ikke kunne undgï¿½ at bruge memory management pï¿½ det?
 
-        sensor_getSensorData(data);
+		// Reading the sensor data
+		float *data = (float *)pvPortMalloc(uplink_payload.len * sizeof(float));
 
-        // Saving sensor data to the uplink
-        uplink_payload.bytes[0] = data[0];
-        uplink_payload.bytes[1] = data[1];
-        uplink_payload.bytes[2] = data[2];
+		sensor_getSensorData(data);
 
-        // Sending uplink message.
-        lora_driver_sendUploadMessage(false, &uplink_payload);
+		// Saving sensor data to the uplink
+		uplink_payload.bytes[0] = data[0];
+		uplink_payload.bytes[1] = data[1];
+		uplink_payload.bytes[2] = data[2];
 
-        vPortFree(data);
-    }
+		// Sending uplink message.
+		lora_driver_sendUploadMessage(false, &uplink_payload);
+
+		vPortFree(data);
+	}
+}
+
+/*-----------------------------------------------------------*/
+
+void task1(void *pvParameters)
+{
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 10000 / portTICK_PERIOD_MS; // 1000 ms
+
+	// Initialise the xLastWakeTime variable with the current time.
+	xLastWakeTime = xTaskGetTickCount();
+
+	for (;;)
+	{
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
+		PORTA ^= _BV(PA0);
+
+		display_7seg_displayHex("abcdef123456789");
+	}
 }
 
 /*-----------------------------------------------------------*/
@@ -118,6 +147,11 @@ void initialiseDrivers()
 
 	// // MH-Z19 initialization (default USART port is USART3)
 	mh_z19_initialise(ser_USART3);
+
+	// 7-segment display initialization
+	display_7seg_initialise(NULL);
+	// 7-segment display power up
+	display_7seg_powerUp();
 }
 
 /*-----------------------------------------------------------*/
