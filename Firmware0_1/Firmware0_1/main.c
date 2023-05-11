@@ -17,7 +17,6 @@
 #include <serial.h>
 #include <time.h>
 #include <util/delay.h>
-#include <message_buffer.h>
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -38,9 +37,7 @@ void recieveData(void *pvParameters);
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
-
-
-
+MessageBufferHandle_t downLinkMessageBufferHandle;
 
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
@@ -48,8 +45,8 @@ void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
 // Global variabels
 float humidity = 0.0;
 float temperature = 0.0;
-int maxHumSetting;
-int lowHumSetting;
+uint16_t maxHumSetting;
+int16_t lowHumSetting;
 int maxTempSetting;
 int lowTempSetting;
 int maxCo2Setting;
@@ -132,12 +129,20 @@ void recieveData(void *pvParameters){
 
 	xLastWakeTime = xTaskGetTickCount();
 	
+	lora_driver_resetRn2483(1);
+	vTaskDelay(2);
+	lora_driver_resetRn2483(0);
+	vTaskDelay(150);
+	lora_driver_flushBuffers();
+	
 for(;;){
 	
 	xTaskDelayUntil(&xLastWakeTime, xFrequency);
+	
+	lora_driver_payload_t downlinkPayload;
 
 	xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora_driver_payload_t), portMAX_DELAY);
-	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.port_no, downlinkPayload.len); // Just for Debug
+	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.portNo, downlinkPayload.len); // Just for Debug
 	if (4 == downlinkPayload.len) { // Check that we have got the expected 4 bytes
 		// decode the payload into our variales
 		maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
@@ -188,7 +193,7 @@ void initialiseSystem()
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
 	// Initialise the LoRaWAN driver with down-link buffer
-	MessageBufferHandle_t downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2); // Here I make room for two downlink messages in the message buffer
+	downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2); // Here I make room for two downlink messages in the message buffer
 	lora_driver_initialise(ser_USART1, downLinkMessageBufferHandle); // The parameter is the USART port the RN2483 module is connected to - in this case USART1 - here no message buffer for down-link messages are defined
 	// Create LoRaWAN task and start it up with priority 3
 	lora_handler_initialise(3);
