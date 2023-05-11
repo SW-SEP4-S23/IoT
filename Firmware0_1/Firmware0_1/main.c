@@ -115,25 +115,6 @@ void sendData(void *pvParameters)
 
 /*-----------------------------------------------------------*/
 
-void task1(void *pvParameters)
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 10000 / portTICK_PERIOD_MS; // 1000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for (;;)
-	{
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA0);
-
-		display_7seg_displayHex("abcdef123456789");
-	}
-}
-
-/*-----------------------------------------------------------*/
 
 void initialiseDrivers()
 {
