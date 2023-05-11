@@ -2,7 +2,7 @@
 
 ## Interface
 
-Max payload size is at 20 bytes including the header.
+Max payload size is at 20 bytes excluding the header.
 Without the header it is at 14 bytes.
 
 Total of 14 bytes can be sent up or back at once.
