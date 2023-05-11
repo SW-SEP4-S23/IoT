@@ -17,6 +17,7 @@
 #include <serial.h>
 #include <time.h>
 #include <util/delay.h>
+#include <message_buffer.h>
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -32,9 +33,18 @@
 
 // define Tasks
 void sendData(void *pvParameters);
+void recieveData(void *pvParameters);
+
+// define messageBufferHandler
+lora_driver_payload_t downlinkPayload;
+MessageBufferHandle_t downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
+
+
+
+
 
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
@@ -42,6 +52,12 @@ void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
 // Global variabels
 float humidity = 0.0;
 float temperature = 0.0;
+int maxHumSetting;
+int lowHumSetting;
+int maxTempSetting;
+int lowTempSetting;
+int maxCo2Setting;
+int lowCo2Setting;
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
@@ -65,6 +81,14 @@ void create_tasks_and_semaphores(void)
 		NULL,
 		3,
 		NULL);
+
+	xTaskCreate(
+		recieveData,
+		"recieveData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		4,
+		NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -85,7 +109,7 @@ void sendData(void *pvParameters)
         uplink_payload.len = 3;       // Length of the actual payload
         uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
 
-        // Hvis man placerede float Data[3] uden for for-loopet, ville man så ikke kunne undgå at bruge memory management på det?
+        // Hvis man placerede float Data[3] uden for for-loopet, ville man sï¿½ ikke kunne undgï¿½ at bruge memory management pï¿½ det?
         
         // Reading the sensor data
         float *data = (float*) pvPortMalloc(uplink_payload.len * sizeof(float));
@@ -104,6 +128,50 @@ void sendData(void *pvParameters)
     }
 }
 
+/*-----------------------------------------------------------*/
+void recieveData(void *pvParameters){
+	
+	
+/*
+\section lora_receive_downlink_message_setup Down-link Message Setup
+
+The following must be added to a FreeRTOS tasks for(;;) loop in your application - typical you will have a separate task for handling downlink messages:
+-# Define a payload struct variable
+Create a payload variable to receive the down-link message in
+*/
+for(;;){
+	
+
+
+//-# Wait for a message to be received
+
+	// this code must be in the loop of a FreeRTOS task!
+	xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora_driver_payload_t), portMAX_DELAY);
+	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.portNo, downlinkPayload.len); // Just for Debug. downlinkPayload.portNo er blevet Ã¦ndret fra downlinkPayload.port_no
+	if (12 == downlinkPayload.len) // Check that we have got the expected 4 bytes(Ã¦ndret til 12, da det var sat op til kun at modtage maxTemp og maxHum)
+	{
+		// decode the payload into our variales
+		maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
+		lowHumSetting = (downlinkPayload.bytes[2] << 8) + downlinkPayload.bytes[3];
+		maxTempSetting = (downlinkPayload.bytes[4] << 8) + downlinkPayload.bytes[5];
+		lowTempSetting = (downlinkPayload.bytes[6] << 8) + downlinkPayload.bytes[7];
+		maxCo2Setting = (downlinkPayload.bytes[8] << 8) + downlinkPayload.bytes[9];
+		lowCo2Setting = (downlinkPayload.bytes[10] << 8) + downlinkPayload.bytes[11];
+
+		printf("max humidity is: %d and lowest co2 setting is: %d", maxHumSetting, lowCo2Setting);
+		
+		lora_driver_resetRn2483(1); // Activate reset line
+		vTaskDelay(2);
+		lora_driver_resetRn2483(0); // Release reset line
+		vTaskDelay(150); // Wait for tranceiver module to wake up after reset
+		lora_driver_flushBuffers(); // get rid of first version string from module after reset!
+		
+		printf("max humidity is: %d and lowest co2 setting is: %d", maxHumSetting, lowCo2Setting);
+	}
+	}
+ 
+
+}
 /*-----------------------------------------------------------*/
 
 void initialiseDrivers()
@@ -142,8 +210,8 @@ void initialiseSystem()
 	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
-	// Initialise the LoRaWAN driver without down-link buffer
-	lora_driver_initialise(1, NULL);
+	// Initialise the LoRaWAN driver with down-link buffer
+	lora_driver_initialise(ser_USART1, downLinkMessageBufferHandle);
 	// Create LoRaWAN task and start it up with priority 3
 	lora_handler_initialise(3);
 }
