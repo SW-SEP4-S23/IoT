@@ -288,6 +288,12 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Logik\Logik.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Logik\Logik.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
@@ -305,6 +311,7 @@
     <Folder Include="FreeRTOS\Example\" />
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
+    <Folder Include="Logik" />
     <Folder Include="sensor\" />
   </ItemGroup>
   <ItemGroup>

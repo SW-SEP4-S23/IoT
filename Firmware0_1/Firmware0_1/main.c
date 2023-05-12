@@ -17,6 +17,7 @@
 #include <serial.h>
 #include <time.h>
 #include <util/delay.h>
+#include "Logik/Logik.h"
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -33,6 +34,7 @@
 // define Tasks
 void sendData(void *pvParameters);
 void recieveData(void *pvParameters);
+logik_sensor logik;
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
@@ -46,11 +48,12 @@ void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
 float humidity = 0.0;
 float temperature = 0.0;
 uint16_t maxHumSetting;
-int16_t lowHumSetting;
-int maxTempSetting;
-int lowTempSetting;
-int maxCo2Setting;
-int lowCo2Setting;
+uint16_t lowHumSetting;
+uint16_t maxTempSetting;
+uint16_t lowTempSetting;
+uint16_t maxCo2Setting;
+uint16_t lowCo2Setting;
+uint16_t UniqId;
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
@@ -143,10 +146,17 @@ for(;;){
 
 	xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora_driver_payload_t), portMAX_DELAY);
 	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.portNo, downlinkPayload.len); // Just for Debug
-	if (4 == downlinkPayload.len) { // Check that we have got the expected 4 bytes
+	if (2 < downlinkPayload.len) { // Check that we have got the expected 7 bytes
 		// decode the payload into our variales
-		maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
-		maxTempSetting = (downlinkPayload.bytes[2] << 8) + downlinkPayload.bytes[3];
+		logik.lowTemp = downlinkPayload.bytes[0];
+		logik.maxTemp = downlinkPayload.bytes[1];
+		logik.lowCo2 = downlinkPayload.bytes[2];
+		logik.maxCo2 = downlinkPayload.bytes[3];
+		logik.lowHum = downlinkPayload.bytes[4];
+		logik.maxHum = downlinkPayload.bytes[5];
+		logik.id=(downlinkPayload.bytes[6]);
+		
+		printf("The current max temp setting is: %d and uniq id is: %d", maxTempSetting, UniqId);
 		}
 	}
  

@@ -24,6 +24,8 @@ FreeRTOS\src\timers.c
 
 FreeRTOS\src\variantHooks.c
 
+Logik\Logik.c
+
 main.c
 
 sensor\SensorReading.c
