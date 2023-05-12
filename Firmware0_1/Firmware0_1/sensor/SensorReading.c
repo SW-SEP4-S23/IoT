@@ -6,14 +6,15 @@
 
 #include "SensorReading.h"
 
-
-void sensor_wakeUp() {
+void sensor_wakeUp()
+{
     hih8120_driverReturnCode_t wake_rc = hih8120_wakeup();
 
     printf("HIH8120 Wake up status: %c\n", (char)wake_rc);
 }
 
-void *sensor_getSensorData(float *dataCollection) {
+void *sensor_getSensorData(float *dataCollection)
+{
 
     sensor_wakeUp();
 
@@ -27,22 +28,17 @@ void *sensor_getSensorData(float *dataCollection) {
     {
 
         _delay_ms(60);
-
     }
-    
 
-
-	dataCollection[0] = hih8120_getHumidity();
-	dataCollection[1] = hih8120_getTemperature();
+    dataCollection[0] = hih8120_getHumidity();
+    dataCollection[1] = hih8120_getTemperature();
 
     uint16_t ppm;
 
     mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
     printf("MH_Z19 Measure status: %c\n", co2_rc);
-    
+
     mh_z19_getCo2Ppm(&ppm);
 
     dataCollection[2] = (float)ppm;
-
-
 }
