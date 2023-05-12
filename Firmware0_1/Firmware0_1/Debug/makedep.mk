@@ -24,7 +24,7 @@ FreeRTOS\src\timers.c
 
 FreeRTOS\src\variantHooks.c
 
-Handlers\7segmentHandler.c
+Logik\Logik.c
 
 main.c
 

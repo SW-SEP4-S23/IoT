@@ -17,12 +17,12 @@
 #include <serial.h>
 #include <time.h>
 #include <util/delay.h>
+#include "Logik/Logik.h"
 #include "Handlers//7segmentHandler.h"
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
 #include <status_leds.h>
-#include <util/delay.h>
 // Needed for HIH8120 driver initialization
 #include <hih8120.h>
 
@@ -37,20 +37,16 @@
 // define Tasks
 void sendData(void *pvParameters);
 void recieveData(void *pvParameters);
-
-// define messageBufferHandler
-lora_driver_payload_t downlinkPayload;
-MessageBufferHandle_t downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
+logik_sensor logik;
 
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
-
-
-
+MessageBufferHandle_t downLinkMessageBufferHandle;
 
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
+
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
@@ -123,44 +119,38 @@ void sendData(void *pvParameters)
 
 /*-----------------------------------------------------------*/
 void recieveData(void *pvParameters){
-	
-	
-/*
-\section lora_receive_downlink_message_setup Down-link Message Setup
 
-The following must be added to a FreeRTOS tasks for(;;) loop in your application - typical you will have a separate task for handling downlink messages:
--# Define a payload struct variable
-Create a payload variable to receive the down-link message in
-*/
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+
+	xLastWakeTime = xTaskGetTickCount();
+	
+	lora_driver_resetRn2483(1);
+	vTaskDelay(2);
+	lora_driver_resetRn2483(0);
+	vTaskDelay(150);
+	lora_driver_flushBuffers();
+	
 for(;;){
 	
+	xTaskDelayUntil(&xLastWakeTime, xFrequency);
+	
+	lora_driver_payload_t downlinkPayload;
 
-
-//-# Wait for a message to be received
-
-	// this code must be in the loop of a FreeRTOS task!
 	xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora_driver_payload_t), portMAX_DELAY);
-	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.portNo, downlinkPayload.len); // Just for Debug. downlinkPayload.portNo er blevet ændret fra downlinkPayload.port_no
-	if (12 == downlinkPayload.len) // Check that we have got the expected 4 bytes(ændret til 12, da det var sat op til kun at modtage maxTemp og maxHum)
-	{
+	printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.portNo, downlinkPayload.len); // Just for Debug
+	if (2 < downlinkPayload.len) { // Check that we have got the expected 7 bytes
 		// decode the payload into our variales
-		maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
-		lowHumSetting = (downlinkPayload.bytes[2] << 8) + downlinkPayload.bytes[3];
-		maxTempSetting = (downlinkPayload.bytes[4] << 8) + downlinkPayload.bytes[5];
-		lowTempSetting = (downlinkPayload.bytes[6] << 8) + downlinkPayload.bytes[7];
-		maxCo2Setting = (downlinkPayload.bytes[8] << 8) + downlinkPayload.bytes[9];
-		lowCo2Setting = (downlinkPayload.bytes[10] << 8) + downlinkPayload.bytes[11];
-
-		printf("max humidity is: %d and lowest co2 setting is: %d", maxHumSetting, lowCo2Setting);
+		logik.lowTemp = downlinkPayload.bytes[0];
+		logik.maxTemp = downlinkPayload.bytes[1];
+		logik.lowCo2 = downlinkPayload.bytes[2];
+		logik.maxCo2 = downlinkPayload.bytes[3];
+		logik.lowHum = downlinkPayload.bytes[4];
+		logik.maxHum = downlinkPayload.bytes[5];
+		logik.id=(downlinkPayload.bytes[6]);
 		
-		lora_driver_resetRn2483(1); // Activate reset line
-		vTaskDelay(2);
-		lora_driver_resetRn2483(0); // Release reset line
-		vTaskDelay(150); // Wait for tranceiver module to wake up after reset
-		lora_driver_flushBuffers(); // get rid of first version string from module after reset!
-		
-		printf("max humidity is: %d and lowest co2 setting is: %d", maxHumSetting, lowCo2Setting);
-	}
+		printf("The current max temp setting is: %d and uniq id is: %d", maxTempSetting, UniqId);
+		}
 	}
  
 
@@ -180,11 +170,6 @@ void initialiseDrivers()
 
 	// // MH-Z19 initialization (default USART port is USART3)
 	mh_z19_initialise(ser_USART3);
-
-	// 7-segment display initialization
-	display_7seg_initialise(NULL);
-	// 7-segment display power up
-	display_7seg_powerUp();
 }
 
 /*-----------------------------------------------------------*/
@@ -210,7 +195,8 @@ void initialiseSystem()
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
 	// Initialise the LoRaWAN driver with down-link buffer
-	lora_driver_initialise(ser_USART1, downLinkMessageBufferHandle);
+	downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2); // Here I make room for two downlink messages in the message buffer
+	lora_driver_initialise(ser_USART1, downLinkMessageBufferHandle); // The parameter is the USART port the RN2483 module is connected to - in this case USART1 - here no message buffer for down-link messages are defined
 	// Create LoRaWAN task and start it up with priority 3
 	lora_handler_initialise(3);
 }
