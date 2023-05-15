@@ -39,6 +39,9 @@ void sendData(void *pvParameters);
 void recieveData(void *pvParameters);
 logik_sensor logik;
 
+
+float *data;
+
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
@@ -101,7 +104,6 @@ void sendData(void *pvParameters)
 		// Hvis man placerede float Data[3] uden for for-loopet, ville man s� ikke kunne undg� at bruge memory management p� det?
 
 		// Reading the sensor data
-		float *data = (float *)pvPortMalloc(uplink_payload.len * sizeof(float));
 
 		sensor_getSensorData(data);
 
@@ -113,7 +115,6 @@ void sendData(void *pvParameters)
 		// Sending uplink message.
 		lora_driver_sendUploadMessage(false, &uplink_payload);
 
-		vPortFree(data);
 	}
 }
 
@@ -149,6 +150,7 @@ for(;;){
 		logik.maxHum = downlinkPayload.bytes[5];
 		logik.id=(downlinkPayload.bytes[6]);
 		
+		//printf for test
 		printf("The current max temp setting is: %d and uniq id is: %d", maxTempSetting, UniqId);
 		}
 	}
