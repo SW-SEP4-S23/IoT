@@ -14,8 +14,16 @@ float data*;
 
 
 void raiseLowerFunc(){
+	
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
+
+	xLastWakeTime = xTaskGetTickCount();
+	
 	sensor_getSensorData(data)
 	for(;;){
+		
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 		
 		if (data[1]<logik_sensor.lowTemp)
 		{
