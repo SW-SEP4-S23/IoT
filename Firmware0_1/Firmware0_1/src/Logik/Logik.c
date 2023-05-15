@@ -6,8 +6,8 @@
  */ 
 
 #include "Logik.h"
-#include "handlers/7segmentHandler.h"
-#include "sensor/SensorReading.h"
+#include "Headers/7segmentHandler.h"
+#include "Headers/SensorReading.h"
 #include <util/delay.h>
 
 

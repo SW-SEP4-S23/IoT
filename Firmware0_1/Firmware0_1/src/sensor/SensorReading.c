@@ -4,7 +4,7 @@
 #include <mh_z19.h>
 #include <hih8120.h>
 
-#include "SensorReading.h"
+#include "Headers/SensorReading.h"
 
 void sensor_wakeUp()
 {
