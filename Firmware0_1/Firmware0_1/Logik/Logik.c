@@ -8,6 +8,7 @@
 #include "Logik.h"
 #include "handlers/7segmentHandler.h"
 #include "sensor/SensorReading.h"
+#include <util/delay.h>
 
 
 float data*;
@@ -15,15 +16,13 @@ float data*;
 
 void raiseLowerFunc(){
 	
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
-
-	xLastWakeTime = xTaskGetTickCount();
+	
 	
 	sensor_getSensorData(data)
 	for(;;){
 		
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+		_delay_ms(6000);
+
 		
 		if (data[1]<logik_sensor.lowTemp)
 		{
