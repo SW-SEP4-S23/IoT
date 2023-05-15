@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 3.14)
+set(projectName test_project)
+project(${projectName})
+
+
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD 14)
+
+set(DOWNLOAD_EXTRACT_TIMESTAMP true)
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  DOWNLOAD_EXTRACT_TIMESTAMP true
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+
+FetchContent_MakeAvailable(googletest )
+
+
+# get all the Source files from Target
+file(GLOB SRC_FILES  "${PROJECT_SOURCE_DIR}/../Target/*.c"  )
+# Remove main.c, as this should not be tested
+string( REPLACE "${PROJECT_SOURCE_DIR}/../Target/main.c" "" SRCS "${SRC_FILES}")
+
+
+set(SOURCES_TEST
+    mytests.cpp
+    ${SRCS}
+)
+
+
+
+# This makes the test.cpp files able to #include target libraries without errors.  
+include_directories(../Target)
+
+
+# Something to 
+enable_testing()
+
+add_executable(
+  ${projectName}
+  ${SOURCES_TEST}
+)
+target_link_libraries(
+  ${projectName}
+  GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(${projectName})

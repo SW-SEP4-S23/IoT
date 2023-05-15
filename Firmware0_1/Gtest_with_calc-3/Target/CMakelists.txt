@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.10)
+project(main CXX C)
+
+# Included for debugging
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+
+
+# Add the source files in this folder
+file(GLOB_RECURSE SRC_FILES  "../../Firmware0_1/src/*.c")
+set(SOURCES
+    ${SRC_FILES}
+)
+
+# Add the header files in this folder
+file(GLOB_RECURSE H_FILES  "*.h")
+
+set(HEADERS
+    ${H_FILES}
+)
+
+# Create the executable
+add_executable(Target ${SOURCES} ${HEADERS})
+
+# Add the headers directory to include path
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
