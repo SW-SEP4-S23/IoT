@@ -5,15 +5,17 @@
  *  Author: jacob
  */
 
-#include "Headers/Logik.h"
-#include "Headers/7segmentHandler.h"
-#include "Headers/SensorReading.h"
+#include "../Headers/Logik.h"
+#include "../Headers/7segmentHandler.h"
+#include "../Headers/SensorReading.h"
 #include <util/delay.h>
 
-float data *;
+float *data;
 
 void raiseLowerFunc()
 {
+	
+	logik_sensor testing;
 
 	sensor_getSensorData(data);
 
@@ -22,34 +24,31 @@ void raiseLowerFunc()
 
 		_delay_ms(6000);
 
-		if (data[1] < logik_sensor.lowTemp)
+		if (data[1] < testing.lowTemp)
 		{
 			return_temp_raised();
 		}
-		if
-			else(data[1] > logik_sensor.maxTemp)
-			{
-				return_temp_lowered();
-			}
+		else if (data[1] > testing.maxTemp)
+		{
+			return_temp_lowered();
+		}
 
-		if (data[2] < logik_sensor.lowCo2)
+		if (data[2] < testing.lowCo2)
 		{
 			return return_co2_raised();
 		}
-		if
-			else(data[2] > logik_sensor.maxCo2)
-			{
-				return_co2_lowered();
-			}
+		else if (data[2] > testing.maxCo2)
+		{
+			return_co2_lowered();
+		}
 
-		if (data[0] < logik_sensor.lowHum)
+		if (data[0] < testing.lowHum)
 		{
 			return_humid_raised();
 		}
-		if
-			else(data[0] > logik_sensor.maxHum)
-			{
-				return_humid_lowered();
-			}
+		else if (data[0] > testing.maxHum)
+		{
+			return_humid_lowered();
+		}
 	}
 }

@@ -1,5 +1,5 @@
 #include <display_7seg.h>
-#include "Headers/7segmentHandler.h"
+#include "../Headers/7segmentHandler.h"
 #include <util/delay.h>
 
 void return_temp_raised()
