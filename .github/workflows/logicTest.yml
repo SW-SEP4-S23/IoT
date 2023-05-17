@@ -34,4 +34,4 @@ jobs:
       working-directory: ./firmware_test
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: Cmake test
+      run: cmake test
