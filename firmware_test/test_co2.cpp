@@ -6,7 +6,6 @@
 // defined by the production code
 extern "C"
 {
-#include "appconfig.h"
 #include "co2.h"
 #include <mh_z19.h>
 
@@ -31,14 +30,6 @@ class Sep4ThingTest_co2 : public ::testing::Test
 protected:
 	void SetUp() override
 	{
-		RESET_FAKE(xTaskCreate);
-		RESET_FAKE(xEventGroupWaitBits);
-		RESET_FAKE(xSemaphoreTake);
-		RESET_FAKE(xSemaphoreGive);
-		RESET_FAKE(mh_z19_initialise);
-		RESET_FAKE(mh_z19_injectCallBack);
-		RESET_FAKE(mh_z19_takeMeassuring);
-		FFF_RESET_HISTORY();
 	}
 	void TearDown() override
 	{}
