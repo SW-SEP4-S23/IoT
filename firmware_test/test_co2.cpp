@@ -6,7 +6,6 @@
 // defined by the production code
 extern "C"
 {
-#include <mh_z19.h>
 
 struct sensorData_st iotThing;
 EventGroupHandle_t meassureEventGroup;
