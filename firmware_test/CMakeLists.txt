@@ -28,7 +28,7 @@ set(SOURCES_TEST
 # This makes the test.cpp files able to #include target libraries without errors.  
 include_directories(
   ../Firmware0_1
-  ../Firmware0_1/Drivers
+  ../Firmware0_1/drivers
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
 )
