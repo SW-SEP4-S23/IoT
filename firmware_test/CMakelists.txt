@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
-set(projectName test_project)
+set(projectName firmware_test)
 project(${projectName})
-
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -17,26 +16,22 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-
 FetchContent_MakeAvailable(googletest )
 
-
-# get all the Source files from Target
-file(GLOB SRC_FILES  "${PROJECT_SOURCE_DIR}/../..//Target/*.c"  )
-# Remove main.c, as this should not be tested
-string( REPLACE "${PROJECT_SOURCE_DIR}/../Target/main.c" "" SRCS "${SRC_FILES}")
-
-
 set(SOURCES_TEST
-    mytests.cpp
+    test_co2.cpp
+    FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
+    ../Firmware0_1/src/logik/logik.c
     ${SRCS}
 )
 
-
-
 # This makes the test.cpp files able to #include target libraries without errors.  
-include_directories(../Target)
-
+include_directories(
+  ../Firmware0_1
+  ../Firmware0_1/Drivers
+  fff
+  FreeRTOS_defs  # Mock and FreeRTOS definitions
+)
 
 # Something to 
 enable_testing()

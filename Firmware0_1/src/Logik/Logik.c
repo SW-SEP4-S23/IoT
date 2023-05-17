@@ -16,9 +16,8 @@ float data*;
 
 void raiseLowerFunc(){
 	
-	
-	
-	sensor_getSensorData(data)
+	sensor_getSensorData(data);
+
 	for(;;){
 		
 		_delay_ms(6000);
