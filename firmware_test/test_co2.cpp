@@ -6,7 +6,6 @@
 // defined by the production code
 extern "C"
 {
-#include <mh_z19.h>
 
 struct sensorData_st iotThing;
 EventGroupHandle_t meassureEventGroup;
@@ -42,9 +41,3 @@ TEST_F()
 // Test if co2 driver is initialized with a call back function.
 // Insert a custom designed mock to act as co2 driver that calls call back function.
 // When call back is run it receives the value in _ppm from co2 driver
-uint16_t _ppm = 1055;
-void injectCallBack_custom_fake(void(*mh_z19_callBack)(uint16_t arg))
-{
-	if (mh_z19_callBack)
-		mh_z19_callBack(_ppm);
-}
