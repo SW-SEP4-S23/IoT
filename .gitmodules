@@ -1,0 +1,6 @@
+[submodule "Firmware0_1/drivers"]
+	path = Firmware0_1/drivers
+	url = https://github.com/ihavn/IOT_Semester_project.git
+[submodule "Firmware0_1/FreeRTOS"]
+	path = Firmware0_1/FreeRTOS
+	url = https://github.com/ihavn/VIA_FreeRTOS_AVRMEGA
