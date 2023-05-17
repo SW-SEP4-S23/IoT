@@ -13,14 +13,6 @@ EventGroupHandle_t dataReadyEventGroup;
 extern SemaphoreHandle_t printMutex;
 }
 
-// Create Fake Driver functions
-FAKE_VOID_FUNC(mh_z19_initialise, serial_comPort_t);
-FAKE_VALUE_FUNC(mh_z19_returnCode_t, mh_z19_takeMeassuring);
-
-// Trick to specify a function pointer as argument in mock
-typedef void (*mh_z19_cb)(uint16_t);
-FAKE_VOID_FUNC(mh_z19_injectCallBack, mh_z19_cb);
-
 // Create Test fixture and Reset all Mocks before each test
 class Sep4ThingTest_co2 : public ::testing::Test
 {
