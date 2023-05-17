@@ -3,10 +3,10 @@
  *
  * Created: 12/05/2023 10.39.45
  *  Author: jacob
- */ 
+ */
 
 #include "Logik.h"
-#include "handlers/7segmentHandler.h"
+#include "Handlers/7segmentHandler.h"
 #include "sensor/SensorReading.h"
 #include <util/delay.h>
 

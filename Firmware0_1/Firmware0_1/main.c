@@ -151,7 +151,7 @@ for(;;){
 		logik.id=(downlinkPayload.bytes[6]);
 		
 		//printf for test
-		printf("The current max temp setting is: %d and uniq id is: %d", maxTempSetting, UniqId);
+		printf("The current max temp setting is: %d and uniq id is: %d", logik.lowTemp, logik.id);
 		}
 	}
  

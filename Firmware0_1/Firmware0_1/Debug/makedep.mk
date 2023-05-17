@@ -26,6 +26,8 @@ FreeRTOS\src\variantHooks.c
 
 Logik\Logik.c
 
+Handlers\7segmentHandler.c
+
 main.c
 
 sensor\SensorReading.c
