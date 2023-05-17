@@ -6,8 +6,6 @@
 // defined by the production code
 extern "C"
 {
-
-struct sensorData_st iotThing;
 EventGroupHandle_t meassureEventGroup;
 EventGroupHandle_t dataReadyEventGroup;
 extern SemaphoreHandle_t printMutex;
