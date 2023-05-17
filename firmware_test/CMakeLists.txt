@@ -21,14 +21,13 @@ FetchContent_MakeAvailable(googletest )
 set(SOURCES_TEST
     test_co2.cpp
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
-    ../Firmware0_1/src/logik/logik.c
     ${SRCS}
 )
 
 # This makes the test.cpp files able to #include target libraries without errors.  
 include_directories(
   ../Firmware0_1
-  ../Firmware0_1/Drivers
+  ../Firmware0_1/drivers
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
 )
