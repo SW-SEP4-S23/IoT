@@ -18,11 +18,13 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Configure CMake
+      working-directory: ${{github.workspace}}/firmware_test
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B firmware_test
+      run: cmake -B ${{github.workspace}}/firmware_test
 
     - name: Build
+      working-directory: ${{github.workspace}}/firmware_test
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/firmware_test --config ${{env.BUILD_TYPE}}
 
