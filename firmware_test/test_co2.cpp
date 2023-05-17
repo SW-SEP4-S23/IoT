@@ -6,6 +6,7 @@
 // defined by the production code
 extern "C"
 {
+#include <mh_z19.h>
 
 struct sensorData_st iotThing;
 EventGroupHandle_t meassureEventGroup;
@@ -23,13 +24,7 @@ protected:
 	void TearDown() override
 	{}
 };
-
-// Test if co2 driver is initialized by co2_createTask()
-TEST_F()
+TEST_F(Sep4ThingTest_co2, Test_co2_taskRun_eventGroup)
 {
-	ASSERT_EQ(1, 1);
+	ASSERT_EQ(1,1);
 }
-
-// Test if co2 driver is initialized with a call back function.
-// Insert a custom designed mock to act as co2 driver that calls call back function.
-// When call back is run it receives the value in _ppm from co2 driver
