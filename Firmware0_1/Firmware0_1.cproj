@@ -29,16 +29,16 @@
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <EraseKey />
     <AsfFrameworkConfig>
-      <framework-data xmlns="">
-        <options />
-        <configurations />
-        <files />
-        <documentation help="" />
-        <offline-documentation help="" />
-        <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.40.0" />
-        </dependencies>
-      </framework-data>
+      <framework-data>
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
+  </dependencies>
+</framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
     <avrtoolserialnumber>J42700024557</avrtoolserialnumber>
@@ -288,25 +288,28 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Logik\Logik.h">
+    <Compile Include="src\Handlers\7segmentHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Logik\Logik.c">
+    <Compile Include="src\Headers\7segmentHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Handlers\7segmentHandler.c">
+    <Compile Include="src\Headers\Logik.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Handlers\7segmentHandler.h">
+    <Compile Include="src\Headers\SensorReading.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="main.c">
+    <Compile Include="src\Logik\Logik.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="sensor\SensorReading.c">
+    <Compile Include="src\LoRaWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="sensor\SensorReading.h">
+    <Compile Include="src\main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SensorReading.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -317,8 +320,11 @@
     <Folder Include="FreeRTOS\Example\" />
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
-    <Folder Include="Logik" />
-    <Folder Include="sensor\" />
+    <Folder Include="src\" />
+    <Folder Include="src\Handlers\" />
+    <Folder Include="src\Headers\" />
+    <Folder Include="src\Logik\" />
+    <Folder Include="src\sensor\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">
@@ -372,9 +378,6 @@
     <None Include="FreeRTOS\src\LICENSE.md">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="LoRaWANHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
