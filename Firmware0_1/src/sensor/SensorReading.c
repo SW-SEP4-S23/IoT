@@ -13,6 +13,42 @@ void sensor_wakeUp()
     printf("HIH8120 Wake up status: %c\n", (char)wake_rc);
 }
 
+float sensor_getTemp(){
+	sensor_wakeUp();
+	_delay_ms(60);
+	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
+	 while (!(hih8120_isReady()))
+	 {
+
+		 _delay_ms(60);
+	 }
+	 return( hih8120_getTemperature());
+}
+
+float *sensor_getHum(){
+	sensor_wakeUp();
+	_delay_ms(60);
+	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
+	while (!(hih8120_isReady()))
+	{
+
+		_delay_ms(60);
+	}
+	return( hih8120_getHumidity());
+}
+
+int *sensor_getco2(){
+	
+	  mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
+	  printf("MH_Z19 Measure status: %c\n", co2_rc);
+		 uint16_t ppm;
+	  mh_z19_getCo2Ppm(&ppm);
+	  
+	  return ppm;
+}
+
+
+
 void *sensor_getSensorData(float *dataCollection)
 {
 

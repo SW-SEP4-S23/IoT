@@ -59,7 +59,7 @@ C_SRCS +=  \
 ../FreeRTOS/src/tasks.c \
 ../FreeRTOS/src/timers.c \
 ../FreeRTOS/src/variantHooks.c \
-../src/Handlers/7segmentHandler.c \
+../src/Handlers/ModuleHandler.c \
 ../src/Logik/Logik.c \
 ../src/LoRaWANHandler.c \
 ../src/main.c \
@@ -84,7 +84,7 @@ FreeRTOS/src/stream_buffer.o \
 FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
-src/Handlers/7segmentHandler.o \
+src/Handlers/ModuleHandler.o \
 src/Logik/Logik.o \
 src/LoRaWANHandler.o \
 src/main.o \
@@ -102,7 +102,7 @@ FreeRTOS/src/stream_buffer.o \
 FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
-src/Handlers/7segmentHandler.o \
+src/Handlers/ModuleHandler.o \
 src/Logik/Logik.o \
 src/LoRaWANHandler.o \
 src/main.o \
@@ -120,7 +120,7 @@ FreeRTOS/src/stream_buffer.d \
 FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
-src/Handlers/7segmentHandler.d \
+src/Handlers/ModuleHandler.d \
 src/Logik/Logik.d \
 src/LoRaWANHandler.d \
 src/main.d \
@@ -138,7 +138,7 @@ FreeRTOS/src/stream_buffer.d \
 FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
-src/Handlers/7segmentHandler.d \
+src/Handlers/ModuleHandler.d \
 src/Logik/Logik.d \
 src/LoRaWANHandler.d \
 src/main.d \
@@ -235,7 +235,7 @@ FreeRTOS/src/variantHooks.o: ../FreeRTOS/src/variantHooks.c
 	@echo Finished building: $<
 	
 
-src/Handlers/7segmentHandler.o: ../src/Handlers/7segmentHandler.c
+src/Handlers/ModuleHandler.o: ../src/Handlers/ModuleHandler.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
