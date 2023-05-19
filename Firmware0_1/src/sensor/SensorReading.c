@@ -25,7 +25,7 @@ float sensor_getTemp(){
 	 return( hih8120_getTemperature());
 }
 
-float *sensor_getHum(){
+float sensor_getHum(){
 	sensor_wakeUp();
 	_delay_ms(60);
 	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
