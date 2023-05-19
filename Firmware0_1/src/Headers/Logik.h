@@ -5,11 +5,22 @@
  *  Author: jacob
  */ 
 typedef struct {
-	int maxTemp;
-	int lowTemp;
-	int maxHum;
-	int lowHum;
-	int maxCo2;
-	int lowCo2;
+	int co2_Upper;
+	int co2_Lower;
+	int hum_Lower;
+	int hum_Raise;
+	int temp_Lower;
+	int temp_Raise;
 	int id;
-} logik_sensor;
+} logik_obj;
+
+
+void initialise();
+
+void saveToFile();
+
+void humChecker(void *pvParameters);
+
+void co2Checker(void *pvParameters);
+
+void tempChecker(void *pvParameters);
