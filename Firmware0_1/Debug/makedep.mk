@@ -28,6 +28,8 @@ src\Handlers\7segmentHandler.c
 
 src\Logik\Logik.c
 
+src\Logik\LogikTest.c
+
 src\LoRaWANHandler.c
 
 src\main.c
