@@ -9,13 +9,17 @@
 #include "../Headers/7segmentHandler.h"
 #include "../Headers/SensorReading.h"
 #include <util/delay.h>
-#include "../src/semphr.h"
+#include <semphr.h>
+#include <stdio.h>
 #include <task.h>
+#include <FreeRTOSTraceDriver.h>
+#include <ATMEGA_FreeRTOS.h>
 
 
 
 
-SemaphoreHandle_t sharedMutex1;
+
+SemaphoreHandle_t sharedMutex1  = xSemaphoreCreateMutex();
 SemaphoreHandle_t sharedMutex2;
 SemaphoreHandle_t sharedMutex3;
 
@@ -26,7 +30,7 @@ logik_obj logikObj;
 void initialise(){
 			struct logik_obj *pointer;
 		// Initialize shared resources
-		sharedMutex1 = xSemaphoreCreateMutex();
+		//sharedMutex1 = xSemaphoreCreateMutex();
 		sharedMutex2 = xSemaphoreCreateMutex();
 		sharedMutex3 = xSemaphoreCreateMutex();
 		float *data;
