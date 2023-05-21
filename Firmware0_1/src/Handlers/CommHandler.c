@@ -2,6 +2,8 @@
 #include <task.h>
 #include <semphr.h>
 #include "../Headers/Logik.h"
+#include "../Headers/SensorReading.h"
+#include <lora_driver.h>
 
 SemaphoreHandle_t Mutex;
 
@@ -22,19 +24,13 @@ void sendData(void *pvParameters)
 		puts("Uploading values");
 		lora_driver_payload_t uplink_payload;
 		// Setting up amount of data points
-		uplink_payload.len = 3;	   // Length of the actual payload
+		uplink_payload.len = 4;	   // Length of the actual payload
 		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
 
-		// Hvis man placerede float Data[3] uden for for-loopet, ville man s� ikke kunne undg� at bruge memory management p� det?
-
-		// Reading the sensor data
-
-		sensor_getSensorData(data);
-
 		// Saving sensor data to the uplink
-		uplink_payload.bytes[0] = data[0];
-		uplink_payload.bytes[1] = data[1];
-		uplink_payload.bytes[2] = data[2];
+		uplink_payload.bytes[0] = sensor_getTemp();
+		uplink_payload.bytes[1] = sensor_getCo2();
+		uplink_payload.bytes[2] = sensor_getHum();
 		uplink_payload.bytes[3] = 1;
 
 		// Sending uplink message.
@@ -42,7 +38,7 @@ void sendData(void *pvParameters)
 	}
 }
 
-/*-----------------------------------------------------------*/
+
 void recieveData(void *pvParameters)
 {
 
@@ -70,11 +66,11 @@ void recieveData(void *pvParameters)
 		{ // Check that we have got the expected 7 bytes
 			// decode the payload into our variales
 			logik.temp_Lower = downlinkPayload.bytes[0];
-			logik.temp_Raise = downlinkPayload.bytes[1];
+			logik.temp_Upper = downlinkPayload.bytes[1];
 			logik.co2_Lower = downlinkPayload.bytes[2];
 			logik.co2_Upper = downlinkPayload.bytes[3];
 			logik.hum_Lower = downlinkPayload.bytes[4];
-			logik.hum_Raise = downlinkPayload.bytes[5];
+			logik.hum_Upper = downlinkPayload.bytes[5];
 			logik.id = (downlinkPayload.bytes[6]);
 
 			// printf for test
