@@ -30,15 +30,15 @@
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data>
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
     <avrtoolserialnumber>J42700024557</avrtoolserialnumber>
@@ -288,19 +288,22 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Handlers\7segmentHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Headers\7segmentHandler.h">
+    <Compile Include="src\Handlers\ModuleHandler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\Logik.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Headers\ModuleHandler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\SensorReading.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Logik\Logik.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Logik\LogikTest.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\LoRaWANHandler.c">

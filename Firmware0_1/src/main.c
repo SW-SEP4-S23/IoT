@@ -37,7 +37,14 @@
 // define Tasks
 void sendData(void *pvParameters);
 void recieveData(void *pvParameters);
-logik_sensor logik;
+void humChecker(void *pvParameters);
+void co2Checker(void *pvParameters);
+void tempChecker(void *pvParameters);
+
+
+
+logik_obj logik;
+
 
 float *data;
 
@@ -79,6 +86,31 @@ void create_tasks_and_semaphores(void)
 		NULL,
 		4,
 		NULL);
+		
+	xTaskCreate(
+		humChecker,
+		"humChecker",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		5,
+		NULL);
+		
+			
+	xTaskCreate(
+		co2Checker,
+		"co2Checker",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		6,
+		NULL);
+				
+	xTaskCreate(
+		tempChecker,
+		"tempChecker",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		7,
+		NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -109,6 +141,7 @@ void sendData(void *pvParameters)
 		uplink_payload.bytes[0] = data[0];
 		uplink_payload.bytes[1] = data[1];
 		uplink_payload.bytes[2] = data[2];
+		uplink_payload.bytes[3] = 1;
 
 		// Sending uplink message.
 		lora_driver_sendUploadMessage(false, &uplink_payload);
@@ -142,16 +175,16 @@ void recieveData(void *pvParameters)
 		if (2 < downlinkPayload.len)
 		{ // Check that we have got the expected 7 bytes
 			// decode the payload into our variales
-			logik.lowTemp = downlinkPayload.bytes[0];
-			logik.maxTemp = downlinkPayload.bytes[1];
-			logik.lowCo2 = downlinkPayload.bytes[2];
-			logik.maxCo2 = downlinkPayload.bytes[3];
-			logik.lowHum = downlinkPayload.bytes[4];
-			logik.maxHum = downlinkPayload.bytes[5];
+			logik.temp_Lower = downlinkPayload.bytes[0];
+			logik.temp_Raise = downlinkPayload.bytes[1];
+			logik.co2_Lower = downlinkPayload.bytes[2];
+			logik.co2_Upper = downlinkPayload.bytes[3];
+			logik.hum_Lower = downlinkPayload.bytes[4];
+			logik.hum_Raise = downlinkPayload.bytes[5];
 			logik.id = (downlinkPayload.bytes[6]);
 
 			// printf for test
-			printf("The current max temp setting is: %d and uniq id is: %d", logik.lowTemp, logik.id);
+			printf("The current max temp setting is: %d and uniq id is: %d", logik.temp_Lower, logik.id);
 		}
 	}
 }
