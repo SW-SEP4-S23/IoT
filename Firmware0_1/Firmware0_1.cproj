@@ -303,6 +303,9 @@
     <Compile Include="src\Logik\Logik.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Logik\LogikTest.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\LoRaWANHandler.c">
       <SubType>compile</SubType>
     </Compile>

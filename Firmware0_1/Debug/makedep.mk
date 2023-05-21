@@ -28,6 +28,8 @@ src\Handlers\ModuleHandler.c
 
 src\Logik\Logik.c
 
+src\Logik\LogikTest.c
+
 src\LoRaWANHandler.c
 
 src\main.c
