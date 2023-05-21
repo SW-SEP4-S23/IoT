@@ -288,13 +288,13 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Handlers\7segmentHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Headers\7segmentHandler.h">
+    <Compile Include="src\Handlers\ModuleHandler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\Logik.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Headers\ModuleHandler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\SensorReading.h">
