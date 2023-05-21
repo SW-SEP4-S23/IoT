@@ -8,9 +8,9 @@ typedef struct {
 	int co2_Upper;
 	int co2_Lower;
 	int hum_Lower;
-	int hum_Raise;
+	int hum_Upper;
 	int temp_Lower;
-	int temp_Raise;
+	int temp_Upper;
 	int id;
 } logik_obj;
 
