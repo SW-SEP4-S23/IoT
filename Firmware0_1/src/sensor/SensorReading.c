@@ -37,7 +37,7 @@ float sensor_getHum(){
 	return( hih8120_getHumidity());
 }
 
-int *sensor_getco2(){
+float sensor_getco2(){
 	
 	  mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
 	  printf("MH_Z19 Measure status: %c\n", co2_rc);
