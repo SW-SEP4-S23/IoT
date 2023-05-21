@@ -1,9 +1,3 @@
-/*
- * CFile1.c
- *
- * Created: 12/05/2023 10.44.29
- *  Author: jacob
- */ 
 typedef struct {
 	int co2_Upper;
 	int co2_Lower;
