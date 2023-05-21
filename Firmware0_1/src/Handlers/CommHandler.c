@@ -76,7 +76,7 @@ void recieveData(void *pvParameters)
 			logikObj.hum_Lower = downlinkPayload.bytes[5];
 			logikObj.temp_Lower = downlinkPayload.bytes[0];
 			logikObj.temp_Upper = downlinkPayload.bytes[1];
-			currentID = = downlinkPayload.bytes[6];
+			currentID = downlinkPayload.bytes[6];
 		}
 	}
 }
