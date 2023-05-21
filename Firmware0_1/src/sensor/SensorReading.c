@@ -6,14 +6,14 @@
 
 #include "../Headers/SensorReading.h"
 
-void sensor_wakeUp()
+void sensor_wakeUp(void)
 {
     hih8120_driverReturnCode_t wake_rc = hih8120_wakeup();
 
     printf("HIH8120 Wake up status: %c\n", (char)wake_rc);
 }
 
-float sensor_getTemp(){
+float sensor_getTemp(void){
 	sensor_wakeUp();
 	_delay_ms(60);
 	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
@@ -25,7 +25,7 @@ float sensor_getTemp(){
 	 return( hih8120_getTemperature());
 }
 
-float sensor_getHum(){
+float sensor_getHum(void){
 	sensor_wakeUp();
 	_delay_ms(60);
 	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
@@ -37,7 +37,7 @@ float sensor_getHum(){
 	return( hih8120_getHumidity());
 }
 
-float sensor_getco2(){
+float sensor_getco2(void){
 	
 	  mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
 	  printf("MH_Z19 Measure status: %c\n", co2_rc);
