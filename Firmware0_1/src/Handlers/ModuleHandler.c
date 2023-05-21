@@ -24,10 +24,10 @@ void startVentilation(){
 }
 
 void humidifier_Lower(){
-display_7seg_powerDown();
-_delay_ms(1000);
-display_7seg_powerUp();
-display_7seg_displayHex("3");	
+	display_7seg_powerDown();
+	_delay_ms(1000);
+	display_7seg_powerUp();
+	display_7seg_displayHex("3");	
 }
 
 void humidifier_Raise(){
