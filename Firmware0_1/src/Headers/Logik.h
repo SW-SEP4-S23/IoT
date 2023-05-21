@@ -5,7 +5,6 @@ typedef struct {
 	int hum_Upper;
 	int temp_Lower;
 	int temp_Upper;
-	int id;
 } logik_obj;
 
 
