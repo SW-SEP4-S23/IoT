@@ -52,7 +52,7 @@ void create_tasks_and_semaphores(void)
     }
 
     comm_vTaskCreate();
-	//logik_taskCreate();
+	initialise();
 }
 
 /*-----------------------------------------------------------*/
