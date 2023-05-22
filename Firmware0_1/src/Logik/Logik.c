@@ -21,12 +21,10 @@ void initialise(void){
 			xSemaphoreGive((Mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
 		}
 	}
-}
 
-void logik_taskCreate(void){
-	   xTaskCreate(humChecker, "HumChecker", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-	   xTaskCreate(co2Checker, "Co2Checker", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
-	   xTaskCreate(tempChecker, "TempChecker", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+	xTaskCreate(humChecker, "HumChecker", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+	xTaskCreate(co2Checker, "Co2Checker", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+	xTaskCreate(tempChecker, "TempChecker", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
 }
 
 
