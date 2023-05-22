@@ -35,11 +35,11 @@ void humChecker(void *pvParameters){
 			
 			if (sensor_getHum() < logikObj.hum_Lower)
 			{
-				return_humid_raised();
+				humidifier_Raise();
 			}
-			else if (sensor_getHum() > logikObj.hum_Raise)
+			else if (sensor_getHum() > logikObj.hum_Upper)
 			{
-				return_humid_lowered();
+				humidifier_Lower();
 			}
 			xSemaphoreGive(Mutex);
 		}
@@ -64,11 +64,11 @@ void co2Checker(void *pvParameters){
 			
 			if (sensor_getCo2() < logikObj.co2_Lower)
 			{
-				return_co2_raised();
+				startCo2Generator();
 			}
 			else if (sensor_getCo2() > logikObj.co2_Upper)
 			{
-				return_co2_lowered();
+				startVentilation();
 			}
 			xSemaphoreGive(Mutex);
 		}
@@ -94,11 +94,11 @@ void tempChecker(void *pvParameters){
 			
 			if (sensor_getTemp() < logikObj.temp_Lower)
 			{
-				return_temp_raised();
+				ac_Raise();
 			}
-			else if (sensor_getTemp() > logikObj.temp_Raise)
+			else if (sensor_getTemp() > logikObj.temp_Upper)
 			{
-				return_temp_lowered();
+				ac_Lower();
 			}
 			xSemaphoreGive(Mutex);
 		}

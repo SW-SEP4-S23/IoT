@@ -43,7 +43,7 @@ float sensor_getHum(void){
 	return( hih8120_getHumidity());
 }
 
-float sensor_getco2(void){
+float sensor_getCo2(void){
 	
 	mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
 
