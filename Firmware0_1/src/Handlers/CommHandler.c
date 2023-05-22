@@ -13,33 +13,32 @@ extern float currentID;
 extern logik_obj logikObj;
 extern MessageBufferHandle_t downLinkMessageBufferHandle;
 
-
 void sendData(void *pvParameters)
 {
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+    TickType_t xLastWakeTime;
+    const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
 
-	xLastWakeTime = xTaskGetTickCount();
+    xLastWakeTime = xTaskGetTickCount();
 
-	for (;;)
-	{
-		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+    for (;;)
+    {
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
-		puts("Uploading values");
-		lora_driver_payload_t uplink_payload;
-		// Setting up amount of data points
-		uplink_payload.len = 4;	   // Length of the actual payload
-		uplink_payload.portNo = 1; // The LoRaWANport no to sent the message to
+        puts("Uploading values");
+        lora_driver_payload_t uplink_payload;
+        // Setting up amount of data points
+        uplink_payload.len = 4;       // Length of the actual payload
+        uplink_payload.portNo = 1;    // The LoRaWAN port number to send the message to
 
-		// Saving sensor data to the uplink
-		uplink_payload.bytes[0] = sensor_getTemp();
-		uplink_payload.bytes[1] = sensor_getCo2();
-		uplink_payload.bytes[2] = sensor_getHum();
-		uplink_payload.bytes[3] = currentID;
+        // Saving sensor data to the uplink
+        uplink_payload.bytes[0] = sensor_getTemp();
+        uplink_payload.bytes[1] = sensor_getCo2();
+        uplink_payload.bytes[2] = sensor_getHum();
+        uplink_payload.bytes[3] = currentID;
 
-		// Sending uplink message.
-		lora_driver_sendUploadMessage(false, &uplink_payload);
-	}
+        // Sending uplink message
+        lora_driver_sendUploadMessage(false, &uplink_payload);
+    }
 }
 
 
@@ -85,21 +84,6 @@ void recieveData(void *pvParameters)
 
 void comm_vTaskCreate(void)
 {
-    // Create the task
-    
-	xTaskCreate(
-		sendData,
-		"sendData",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		3,
-		NULL);
-
-	xTaskCreate(
-		recieveData,
-		"recieveData",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		4,
-		NULL);
+    xTaskCreate(sendData, "SendData", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+    xTaskCreate(recieveData, "RecieveData", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
 }
