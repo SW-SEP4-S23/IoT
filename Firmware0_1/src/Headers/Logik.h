@@ -10,6 +10,8 @@ typedef struct {
 
 void initialise();
 
+void logik_taskCreate();
+
 void saveToFile();
 
 void humChecker(void *pvParameters);
