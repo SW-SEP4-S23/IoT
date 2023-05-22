@@ -4,6 +4,7 @@
 #include "../Headers/Logik.h"
 #include "../Headers/SensorReading.h"
 #include "../Headers/DownLinkValidator.h"
+#include "../Headers/CommHandler.h"
 #include <lora_driver.h>
 
 SemaphoreHandle_t Mutex;
