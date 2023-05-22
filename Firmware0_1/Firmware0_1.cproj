@@ -294,6 +294,9 @@
     <Compile Include="src\Handlers\ModuleHandler.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Headers\CommHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Headers\DownLinkValidator.h">
       <SubType>compile</SubType>
     </Compile>
