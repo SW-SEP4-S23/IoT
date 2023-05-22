@@ -13,17 +13,6 @@ typedef struct {
 	int temp_Upper;
 } logik_obj;
 
-
 void initialise();
-
-void logik_taskCreate();
-
-void saveToFile();
-
-void humChecker(void *pvParameters);
-
-void co2Checker(void *pvParameters);
-
-void tempChecker(void *pvParameters);
 
 #endif  // LOGIK_H
