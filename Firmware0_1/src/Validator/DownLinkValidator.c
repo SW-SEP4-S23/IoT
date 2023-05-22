@@ -2,10 +2,11 @@
 #include "../Headers/DownLinkValidator.h"
 
 float currentID;
-
+/*
 void initialise() {
     currentID = 0;
 }
+*/
 
 int validateDownlink(float hum_lower, float hum_upper, float co2_lower, float co2_upper, float temp_lower, float temp_upper, float id) {
 

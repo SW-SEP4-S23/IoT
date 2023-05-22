@@ -10,6 +10,7 @@ SemaphoreHandle_t Mutex;
 
 extern float currentID;
 extern logik_obj logikObj;
+extern MessageBufferHandle_t downLinkMessageBufferHandle;
 
 
 void sendData(void *pvParameters)

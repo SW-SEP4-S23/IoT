@@ -18,7 +18,7 @@
 #include <time.h>
 #include <util/delay.h>
 #include "Headers/Logik.h"
-#include "Headers/7segmentHandler.h"
+#include "Headers/ModuleHandler.h"
 
 // Needed for LoRaWAN
 #include <lora_driver.h>

@@ -288,7 +288,13 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Handlers\CommHandler.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Handlers\ModuleHandler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Headers\DownLinkValidator.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\Logik.h">
@@ -303,9 +309,6 @@
     <Compile Include="src\Logik\Logik.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Logik\LogikTest.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\LoRaWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
@@ -313,6 +316,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\sensor\SensorReading.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Validator\DownLinkValidator.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -328,6 +334,7 @@
     <Folder Include="src\Headers\" />
     <Folder Include="src\Logik\" />
     <Folder Include="src\sensor\" />
+    <Folder Include="src\Validator\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">

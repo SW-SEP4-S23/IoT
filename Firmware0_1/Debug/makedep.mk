@@ -24,15 +24,17 @@ FreeRTOS\src\timers.c
 
 FreeRTOS\src\variantHooks.c
 
+src\Handlers\CommHandler.c
+
 src\Handlers\ModuleHandler.c
 
 src\Logik\Logik.c
-
-src\Logik\LogikTest.c
 
 src\LoRaWANHandler.c
 
 src\main.c
 
 src\sensor\SensorReading.c
+
+src\Validator\DownLinkValidator.c
 
