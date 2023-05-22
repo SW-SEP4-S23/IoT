@@ -3,7 +3,7 @@
 #include <task.h>
 #include <semphr.h>
 #include "../Headers/Logik.h"
-#include "../Headers/7segmentHandler.h"
+#include "../Headers/ModuleHandler.h"
 #include "../Headers/SensorReading.h"
 
 SemaphoreHandle_t Mutex;
@@ -33,11 +33,11 @@ void humChecker(void *pvParameters){
 		
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (data[0] < logikObj.hum_Lower)
+			if (sensor_getHum() < logikObj.hum_Lower)
 			{
 				return_humid_raised();
 			}
-			else if (data[0] > logikObj.hum_Raise)
+			else if (sensor_getHum() > logikObj.hum_Raise)
 			{
 				return_humid_lowered();
 			}
@@ -62,11 +62,11 @@ void co2Checker(void *pvParameters){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (data[2] < logikObj.co2_Lower)
+			if (sensor_getCo2() < logikObj.co2_Lower)
 			{
 				return_co2_raised();
 			}
-			else if (data[2] > logikObj.co2_Upper)
+			else if (sensor_getCo2() > logikObj.co2_Upper)
 			{
 				return_co2_lowered();
 			}
@@ -92,11 +92,11 @@ void tempChecker(void *pvParameters){
 		
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (data[1] < logikObj.temp_Lower)
+			if (sensor_getTemp() < logikObj.temp_Lower)
 			{
 				return_temp_raised();
 			}
-			else if (data[1] > logikObj.temp_Raise)
+			else if (sensor_getTemp() > logikObj.temp_Raise)
 			{
 				return_temp_lowered();
 			}
