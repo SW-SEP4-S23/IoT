@@ -32,12 +32,15 @@ void logik_taskCreate(void){
 
 void humChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
+	
 	
 	
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+		
+		printf("BOBB");
 		
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
@@ -62,7 +65,7 @@ void humChecker(void *pvParameters){
 
 void co2Checker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
@@ -91,7 +94,7 @@ void co2Checker(void *pvParameters){
 
 void tempChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
