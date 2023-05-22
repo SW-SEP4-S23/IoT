@@ -81,3 +81,24 @@ void recieveData(void *pvParameters)
 		}
 	}
 }
+
+void comm_vTaskCreate(void)
+{
+    // Create the task
+    
+	xTaskCreate(
+		sendData,
+		"sendData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		3,
+		NULL);
+
+	xTaskCreate(
+		recieveData,
+		"recieveData",
+		configMINIMAL_STACK_SIZE,
+		NULL,
+		4,
+		NULL);
+}

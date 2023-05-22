@@ -32,8 +32,6 @@
 // Needed for 7-segment driver initialization
 #include <display_7seg.h>
 
-#include "Headers/SensorReading.h"
-
 // define Tasks
 void sendData(void *pvParameters);
 void recieveData(void *pvParameters);
@@ -71,21 +69,7 @@ void create_tasks_and_semaphores(void)
 		}
 	}
 
-	xTaskCreate(
-		sendData,
-		"sendData",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		3,
-		NULL);
-
-	xTaskCreate(
-		recieveData,
-		"recieveData",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		4,
-		NULL);
+	comm_vTaskCreate();
 		
 	xTaskCreate(
 		humChecker,
