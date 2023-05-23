@@ -108,7 +108,7 @@ uint8_t xData_getTemp_lower(void) {
 }
 
 uint8_t xData_getId() {
-
+    return limit_t.id;
 }
 
 void vData_setCo2_upper(uint8_t value) {

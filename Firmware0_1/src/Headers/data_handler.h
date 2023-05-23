@@ -17,6 +17,7 @@ uint8_t xData_getHum_lower();
 uint8_t xData_getHum_upper();
 uint8_t xData_getTemp_lower();
 uint8_t xData_getTemp_upper();
+uint8_t xData_getId();
 
 uint8_t xData_getCo2_upper();
 uint8_t xData_getCo2_lower();
