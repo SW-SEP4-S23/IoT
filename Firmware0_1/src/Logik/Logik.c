@@ -10,6 +10,9 @@ SemaphoreHandle_t Mutex;
 
 logik_obj logikObj;
 
+void co2Checker(void *pvParameters);
+void tempChecker(void *pvParameters);
+void humChecker(void *pvParameters);
 
 
 void initialise(void){
@@ -30,7 +33,7 @@ void initialise(void){
 
 void humChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
 	
 	
@@ -63,7 +66,7 @@ void humChecker(void *pvParameters){
 
 void co2Checker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
@@ -92,7 +95,7 @@ void co2Checker(void *pvParameters){
 
 void tempChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 3000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
