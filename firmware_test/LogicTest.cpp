@@ -10,60 +10,37 @@ extern "C"
 #include "../Headers/Logik.h"
 #include "../Headers/SensorReading.h"
 
-SemaphoreHandle_t Mutex;
-
-logik_obj logikObj;
+//SemaphoreHandle_t Mutex;
+//logik_obj logikObj;
 
 }
 
 
 DEFINE_FFF_GLOBALS
-FAKE_VOID_FUNC(humChecker);
-/*FAKE_VOID_FUNC(tempChecker);
 FAKE_VOID_FUNC(co2Checker);
-
-FAKE_VOID_FUNC(humidifier_Lower);
-FAKE_VOID_FUNC(humidifier_Raise);
-
-FAKE_VOID_FUNC(startCo2Generator);
-FAKE_VOID_FUNC(startVentilation);
-FAKE_VOID_FUNC(ac_Lower);
-FAKE_VOID_FUNC(ac_Raise);
-*/
-
-
-FAKE_VALUE_FUNC(float, sensor_getHum);
-FAKE_VALUE_FUNC(float, sensor_getTemp);
-FAKE_VALUE_FUNC(float, sensor_getCo2);
+//FAKE_VALUE_FUNC(float, sensor_getCo2);
 
 
 
-class LogicTest_test : public ::testing::Test
+class Co2Checker_test : public ::testing::Test
 {
 
 protected:
 	void SetUp() override
 	{
     RESET_FAKE(xTaskCreate);
-	RESET_FAKE(humChecker);
-    /*RESET_FAKE(co2Checker);
-    RESET_FAKE(sensor_getHum);
-    RESET_FAKE(sensor_getTemp);
-    RESET_FAKE(sensor_getCo2);
-    RESET_FAKE(humidifier_Lower);
-    RESET_FAKE(humidifier_Raise);
-    RESET_FAKE(startCo2Generator);
-    RESET_FAKE(startVentilation);
-    RESET_FAKE(ac_Lower);
-    RESET_FAKE(ac_Raise);
-    */
+	RESET_FAKE(co2Checker);
+   // RESET_FAKE(sensor_getCo2);
+    //RESET_FAKE(startCo2Generator);
+    //RESET_FAKE(startVentilation);
+    
 
 		FFF_RESET_HISTORY();
 	}
 	void TearDown() override
 	{}
 };
-TEST(HumCheckerTest, HumOutsideLowValidRange) {
+TEST(co2Checker_test, HumOutsideLowValidRange) {
     
     
     // Arrange
@@ -72,7 +49,7 @@ TEST(HumCheckerTest, HumOutsideLowValidRange) {
    // sensor_getHum_fake.return_val=-1;  // Set the humidity reading below the lower threshold
 
     // Act
-    humChecker();// Call the function
+    co2Checker();// Call the function
 
     ASSERT_EQ(xTaskCreate_fake.call_count, 1);// Check to see if the task is created
 }

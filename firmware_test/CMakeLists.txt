@@ -22,12 +22,7 @@ set(SOURCES_TEST
     LogicTest.cpp
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
     ../Firmware0_1/src/Logik/Logik.c
-    ../Firmware0_1/src/Handlers/ModuleHandler.c
-    ../Firmware0_1/src/Handlers/ModuleHandler.c
-    ../Firmware0_1/src/sensor/SensorReading.c
-    ../Firmware0_1/src/LoRaWANHandler.c
-   #../Sep4Thing/co2.c
-   # ../Sep4Thing/util.c
+    ../Firmware0_1/src/Sensor/SensorReading.c
     ${SRCS}
 )
 
