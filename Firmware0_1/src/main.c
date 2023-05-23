@@ -12,6 +12,7 @@
 #include "Headers/Logik.h"
 #include "Headers/ModuleHandler.h"
 #include "Headers/CommHandler.h"
+#include "Headers/data_handler.h"
 
 // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -29,7 +30,10 @@ logik_obj logik;
 float *data;
 
 // define semaphore handle
-SemaphoreHandle_t xTestSemaphore;
+SemaphoreHandle_t hum_mutex;
+SemaphoreHandle_t temp_mutex;
+SemaphoreHandle_t co2_mutex;
+SemaphoreHandle_t eep_mutex;
 
 MessageBufferHandle_t downLinkMessageBufferHandle;
 
@@ -42,17 +46,25 @@ void create_tasks_and_semaphores(void)
     // Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
     // because it is sharing a resource, such as the Serial port.
     // Semaphores should only be used whilst the scheduler is running, but we can set it up here.
-    if (xTestSemaphore == NULL) // Check to confirm that the Semaphore has not already been created.
-    {
-        xTestSemaphore = xSemaphoreCreateMutex(); // Create a mutex semaphore.
-        if ((xTestSemaphore) != NULL)
-        {
-            xSemaphoreGive((xTestSemaphore)); // Make the mutex available for use, by initially "Giving" the Semaphore.
-        }
-    }
+    create_mutex(hum_mutex);
+	create_mutex(temp_mutex);
+	create_mutex(co2_mutex);
+    create_mutex(eep_mutex);
 
     comm_vTaskCreate();
+    data_vTaskCreate();
 	initialise();
+}
+
+void create_mutex(SemaphoreHandle_t mutex) {
+	if (mutex == NULL) // Check to confirm that the Semaphore has not already been created.
+	{
+		mutex = xSemaphoreCreateMutex(); // Create a mutex semaphore.
+		if ((mutex) != NULL)
+		{
+			xSemaphoreGive((mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
+		}
+	}
 }
 
 /*-----------------------------------------------------------*/
@@ -68,6 +80,8 @@ void initialiseDrivers()
 
     // // MH-Z19 initialization (default USART port is USART3)
     mh_z19_initialise(ser_USART3);
+
+    
 }
 
 /*-----------------------------------------------------------*/
@@ -88,6 +102,8 @@ void initialiseSystem()
     initialiseDrivers();
 
     create_tasks_and_semaphores();
+
+    vData_handler_initialise();
 
     // vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     // Status Leds driver
