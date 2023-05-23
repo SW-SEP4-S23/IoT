@@ -2,8 +2,8 @@
 #include <task.h>
 #include <semphr.h>
 #include "../Headers/Logik.h"
-#include "../Headers/ModuleHandler.h"
 #include "../Headers/SensorReading.h"
+
 
 
 SemaphoreHandle_t Mutex;
@@ -33,7 +33,7 @@ void initialise(void){
 
 void humChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = pdMS_TO_TICKS(60000UL);
 	xLastWakeTime = xTaskGetTickCount();
 	
 	
@@ -66,7 +66,7 @@ void humChecker(void *pvParameters){
 
 void co2Checker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = pdMS_TO_TICKS(60000UL);
 
 	xLastWakeTime = xTaskGetTickCount();
 	
@@ -95,7 +95,7 @@ void co2Checker(void *pvParameters){
 
 void tempChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = pdMS_TO_TICKS(60000UL);
 
 	xLastWakeTime = xTaskGetTickCount();
 	

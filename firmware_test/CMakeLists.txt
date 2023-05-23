@@ -35,6 +35,7 @@ set(SOURCES_TEST
 include_directories(
   ../firmware0_1
   ../firmware0_1/Drivers
+  ../firmware0_1/FreeRTOS
   ../firmware0_1/src/Headers
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
