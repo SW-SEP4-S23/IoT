@@ -5,10 +5,7 @@
 #include "../Headers/Logik.h"
 #include "../Headers/ModuleHandler.h"
 #include "../Headers/SensorReading.h"
-
-SemaphoreHandle_t Mutex;
-
-logik_obj logikObj;
+#include "../Headers/data_handler.h"
 
 void co2Checker(void *pvParameters);
 void tempChecker(void *pvParameters);
@@ -16,15 +13,6 @@ void humChecker(void *pvParameters);
 
 
 void initialise(void){
-	if (Mutex == NULL) // Check to confirm that the Semaphore has not already been created.
-	{
-		Mutex = xSemaphoreCreateMutex(); // Create a mutex semaphore.
-		if ((Mutex) != NULL)
-		{
-			xSemaphoreGive((Mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
-		}
-	}
-
 	xTaskCreate(humChecker, "HumChecker", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 	xTaskCreate(co2Checker, "Co2Checker", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
 	xTaskCreate(tempChecker, "TempChecker", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
@@ -43,21 +31,14 @@ void humChecker(void *pvParameters){
 		
 		printf("BOBB");
 		
-		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (sensor_getHum() < logikObj.hum_Lower)
-			{
-				humidifier_Raise();
-			}
-			else if (sensor_getHum() > logikObj.hum_Upper)
-			{
-				humidifier_Lower();
-			}
-			xSemaphoreGive(Mutex);
-		}
-		else
+		if (sensor_getHum() < logikObj.hum_Lower)
 		{
-			printf("time out");
+			humidifier_Raise();
+		}
+		else if (sensor_getHum() > logikObj.hum_Upper)
+		{
+			humidifier_Lower();
 		}
 	}
 	
@@ -72,21 +53,14 @@ void co2Checker(void *pvParameters){
 	
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (sensor_getCo2() < logikObj.co2_Lower)
-			{
-				startCo2Generator();
-			}
-			else if (sensor_getCo2() > logikObj.co2_Upper)
-			{
-				startVentilation();
-			}
-			xSemaphoreGive(Mutex);
-		}
-		else
+		if (sensor_getCo2() < logikObj.co2_Lower)
 		{
-			printf("time out");
+			startCo2Generator();
+		}
+		else if (sensor_getCo2() > logikObj.co2_Upper)
+		{
+			startVentilation();
 		}
 	}
 	
@@ -101,22 +75,14 @@ void tempChecker(void *pvParameters){
 	
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		
-		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
-			if (sensor_getTemp() < logikObj.temp_Lower)
-			{
-				ac_Raise();
-			}
-			else if (sensor_getTemp() > logikObj.temp_Upper)
-			{
-				ac_Lower();
-			}
-			xSemaphoreGive(Mutex);
-		}
-		else
+		if (sensor_getTemp() < logikObj.temp_Lower)
 		{
-			printf("time out");
+			ac_Raise();
+		}
+		else if (sensor_getTemp() > logikObj.temp_Upper)
+		{
+			ac_Lower();
 		}
 	}
 }
