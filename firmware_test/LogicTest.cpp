@@ -7,9 +7,6 @@ extern "C"
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
-#include "../Headers/Logik.h"
-#include "../Headers/ModuleHandler.h"
-#include "../Headers/SensorReading.h"
 }
 
 

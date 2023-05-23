@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/firmware_Test[1]_tests.cmake")
+  include("C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/firmware_Test[1]_tests.cmake")
+else()
+  add_test(firmware_Test_NOT_BUILT firmware_Test_NOT_BUILT)
+endif()
