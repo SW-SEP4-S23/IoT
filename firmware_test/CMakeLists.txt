@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-set(projectName firmware_test)
+set(projectName firmware_Test)
 project(${projectName})
 
 # GoogleTest requires at least C++14
@@ -19,15 +19,24 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
-#    test_co2.cpp
+    test_co2.cpp
+    LogicTest.cpp
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
+    ../Firmware0_1/src/Logik/Logik.c
+    ../Firmware0_1/src/Handlers/ModuleHandler.c
+    ../Firmware0_1/src/Handlers/ModuleHandler.c
+    ../Firmware0_1/src/sensor/SensorReading.c
+    ../Firmware0_1/src/LoRaWANHandler.c
+   #../Sep4Thing/co2.c
+   # ../Sep4Thing/util.c
     ${SRCS}
 )
 
 # This makes the test.cpp files able to #include target libraries without errors.  
 include_directories(
-  ../Firmware0_1
-  ../Firmware0_1/drivers
+  ../firmware0_1
+  ../firmware0_1/Drivers
+  ../firmware0_1/src/Headers
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
 )
