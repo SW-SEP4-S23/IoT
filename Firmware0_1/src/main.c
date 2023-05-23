@@ -52,6 +52,7 @@ void create_tasks_and_semaphores(void)
     }
 
     comm_vTaskCreate();
+	initialise();
 }
 
 /*-----------------------------------------------------------*/
@@ -90,12 +91,12 @@ void initialiseSystem()
 
     // vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     // Status Leds driver
-    status_leds_initialise(5); // Priority 5 for internal task
+    status_leds_initialise(51); // Priority 5 for internal task
     // Initialise the LoRaWAN driver with down-link buffer
     downLinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t) * 2); // Here I make room for two downlink messages in the message buffer
     lora_driver_initialise(ser_USART1, downLinkMessageBufferHandle);                       // The parameter is the USART port the RN2483 module is connected to - in this case USART1 - here no message buffer for down-link messages are defined
     // Create LoRaWAN task and start it up with priority 3
-    lora_handler_initialise(3);
+    lora_handler_initialise(50);
 }
 
 /*-----------------------------------------------------------*/

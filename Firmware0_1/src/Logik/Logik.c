@@ -10,6 +10,11 @@ SemaphoreHandle_t Mutex;
 
 logik_obj logikObj;
 
+void co2Checker(void *pvParameters);
+void tempChecker(void *pvParameters);
+void humChecker(void *pvParameters);
+
+
 void initialise(void){
 	if (Mutex == NULL) // Check to confirm that the Semaphore has not already been created.
 	{
@@ -19,17 +24,24 @@ void initialise(void){
 			xSemaphoreGive((Mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
 		}
 	}
+
+	xTaskCreate(humChecker, "HumChecker", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+	xTaskCreate(co2Checker, "Co2Checker", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+	xTaskCreate(tempChecker, "TempChecker", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
 }
 
 
 void humChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
+	
 	
 	
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+		
+		printf("BOBB");
 		
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			
@@ -54,7 +66,7 @@ void humChecker(void *pvParameters){
 
 void co2Checker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
@@ -83,7 +95,7 @@ void co2Checker(void *pvParameters){
 
 void tempChecker(void *pvParameters){
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300000 / portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
 
 	xLastWakeTime = xTaskGetTickCount();
 	
