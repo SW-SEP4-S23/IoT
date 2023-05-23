@@ -1,3 +1,0 @@
-firmware_Test_NOT_BUILT 0 0
----
-firmware_Test_NOT_BUILT

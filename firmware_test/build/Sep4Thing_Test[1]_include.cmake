@@ -1,5 +1,0 @@
-if(EXISTS "C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/Sep4Thing_Test[1]_tests.cmake")
-  include("C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/Sep4Thing_Test[1]_tests.cmake")
-else()
-  add_test(Sep4Thing_Test_NOT_BUILT Sep4Thing_Test_NOT_BUILT)
-endif()
