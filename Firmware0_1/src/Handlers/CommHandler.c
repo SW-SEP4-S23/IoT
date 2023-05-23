@@ -84,6 +84,6 @@ void recieveData(void *pvParameters)
 
 void comm_vTaskCreate(void)
 {
-    xTaskCreate(sendData, "SendData", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
-    xTaskCreate(recieveData, "RecieveData", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+    xTaskCreate(sendData, "SendData", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
+    xTaskCreate(recieveData, "RecieveData", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
 }
