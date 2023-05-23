@@ -1,0 +1,19 @@
+Start testing: May 23 13:16 Romance Daylight Time
+----------------------------------------------------------
+Unable to find executable: firmware_Test_NOT_BUILT
+1/1 Testing: firmware_Test_NOT_BUILT
+1/1 Test: firmware_Test_NOT_BUILT
+Command: ""
+Directory: C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build
+"firmware_Test_NOT_BUILT" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"firmware_Test_NOT_BUILT" end time: May 23 13:16 Romance Daylight Time
+"firmware_Test_NOT_BUILT" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 23 13:16 Romance Daylight Time

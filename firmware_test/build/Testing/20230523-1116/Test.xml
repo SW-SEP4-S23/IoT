@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20230523-1116-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.24.202208181-MSVC_2"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Windows"
+	Hostname="MSI"
+	OSRelease=" Personal"
+	OSVersion=" (Build 19044)"
+	OSPlatform="AMD64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="13"
+	ProcessorCacheSize="-1"
+	NumberOfLogicalCPU="16"
+	NumberOfPhysicalCPU="8"
+	TotalVirtualMemory="23765"
+	TotalPhysicalMemory="16085"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2304"
+	>
+	<Testing>
+		<StartDateTime>May 23 13:16 Romance Daylight Time</StartDateTime>
+		<StartTestTime>1684840591</StartTestTime>
+		<TestList>
+			<Test>./firmware_Test_NOT_BUILT</Test>
+		</TestList>
+		<Test Status="notrun">
+			<Name>firmware_Test_NOT_BUILT</Name>
+			<Path>.</Path>
+			<FullName>./firmware_Test_NOT_BUILT</FullName>
+			<FullCommandLine></FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Unable to find executable</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value></Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value></Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>Unable to find executable: firmware_Test_NOT_BUILT</Value>
+				</Measurement>
+			</Results>
+		</Test>
+		<EndDateTime>May 23 13:16 Romance Daylight Time</EndDateTime>
+		<EndTestTime>1684840591</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
