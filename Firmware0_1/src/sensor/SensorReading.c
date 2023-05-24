@@ -4,17 +4,16 @@
 #include <mh_z19.h>
 #include <hih8120.h>
 #include "../Headers/util.h"
-
 #include "../Headers/SensorReading.h"
 
 void sensor_wakeUp(void)
 {
     hih8120_driverReturnCode_t wake_rc = hih8120_wakeup();
 
-	protected_printf("HIH8120 Wake up status: %c\n", hih8120_xReturnCodes_to_text(wake_rc))
+	protected_printf("HIH8120 Wake up status: %c\n", hih8120_xReturnCodes_to_text(wake_rc));
 }
 
-float sensor_getTemp(void){
+float sensor_getTemp(void) {
 	sensor_wakeUp();
 
 	_delay_ms(60);
@@ -29,7 +28,7 @@ float sensor_getTemp(void){
 }
 
 
-float sensor_getHum(void){
+float sensor_getHum(void) {
 
 	sensor_wakeUp();
 
