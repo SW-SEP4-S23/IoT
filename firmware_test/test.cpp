@@ -5,7 +5,6 @@
 extern "C"
 {
 #include "ModuleHandler.h"
-#include <display_7seg.h>
 }
 
 TEST(SimpleTest, enLigmedEn)
