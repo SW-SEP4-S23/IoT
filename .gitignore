@@ -4,6 +4,7 @@
 
 # Directories
 .vs
+build/
 
 # Object files
 *.o
