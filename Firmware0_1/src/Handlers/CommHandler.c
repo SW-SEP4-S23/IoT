@@ -20,8 +20,7 @@ void sendData(void *pvParameters)
     for (;;)
     {
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
-
-        puts("Uploading values");
+		
         lora_driver_payload_t uplink_payload;
         // Setting up amount of data points
         uplink_payload.len = 4;       // Length of the actual payload
