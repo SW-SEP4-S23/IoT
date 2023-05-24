@@ -1,12 +1,11 @@
-#include <stdbool.h>
 #include "../Headers/DownLinkValidator.h"
 #include "../Headers/data_handler.h"
 
-int validateDownlink(float hum_lower, float hum_upper, float co2_lower, float co2_upper, float temp_lower, float temp_upper, float id) {
+int validateDownlink(uint8_t hum_lower, uint8_t hum_upper, uint8_t co2_lower, uint8_t co2_upper, uint8_t temp_lower, uint8_t temp_upper, uint8_t id) {
 
     // Checks the current ID against the saved ID.
 
-    if (id == xData_getId) {
+    if (id == xData_getId()) {
         return 0;
     }
 
