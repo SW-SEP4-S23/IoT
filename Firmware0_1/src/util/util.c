@@ -11,7 +11,7 @@ const char* mh_z19_returnCode_text[] = {
 	"MHZ19_PPM_MUST_BE_GT_999"
 };
 
-const char* hih8120_driverReturnCodes_text = {
+const char* hih8120_driverReturnCodes_text[] = {
 	"HIH8120_OK",	/**< Everything went well */
 	"HIH8120_OUT_OF_HEAP", /**< Not enough heap to initialise the driver */
 	"HIH8120_DRIVER_NOT_INITIALISED", /**< Driver must be initialise before use */
