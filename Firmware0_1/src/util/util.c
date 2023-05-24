@@ -4,7 +4,7 @@
 #include <ATMEGA_FreeRTOS.h>
 #include "../Headers/util.h"
 
-const char* mh_z19_returnCode_t_text[] = {
+const char* mh_z19_returnCode_text[] = {
     "MHZ19_OK", 	/**< Everything went well */
 	"MHZ19_NO_MEASSURING_AVAILABLE", /**< No results are received from the sensor */
 	"MHZ19_NO_SERIAL", /**< No serial driver is specified */
@@ -23,7 +23,7 @@ char* hih8120_xReturnCodes_to_text(hih8120_driverReturnCode_t returnMessage) {
 }
 
 char* mh_z19_xReturnCodes_to_text(mh_z19_returnCode_t returnMessage) {
-    return mh_z19_driverReturnCodes_text[returnMessage];
+    return mh_z19_returnCode_text[returnMessage];
 }
 
 /* Mutex */
@@ -35,6 +35,6 @@ void protected_printf(const char* _fmt, ...)
 	va_start(_arg, _fmt);
 
 	xSemaphoreTake(printMutex, portMAX_DELAY);
-	vprintf(_fmt + "\n", _arg);
+	vprintf(_fmt, _arg);
 	xSemaphoreGive(printMutex);
 }
