@@ -1,3 +1,0 @@
-C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
-C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/_deps/googletest-subbuild/CMakeFiles/ALL_BUILD.dir
-C:/Users/jacob/Desktop/Sep4/IoT/firmware_test/build/_deps/googletest-subbuild/CMakeFiles/ZERO_CHECK.dir
