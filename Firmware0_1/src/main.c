@@ -40,6 +40,7 @@ MessageBufferHandle_t downLinkMessageBufferHandle;
 
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
+void create_mutex(SemaphoreHandle_t* mutex);
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
