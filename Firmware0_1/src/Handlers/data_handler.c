@@ -29,12 +29,16 @@ limit_t limits;
 
 void vData_handler_initialise() {
     uint8_t id = eeprom_read_byte((uint8_t*)0);
+	
+	protected_printf("Checking eeprom\n");
 
     if (id == 255)
     {
         vSetDefault();
         return;
     }
+	
+	protected_printf("Found data with id %d\n", id);
 
     limits.id = id;
     limits.co2_Upper = eeprom_read_byte((uint8_t*)1);
@@ -46,6 +50,9 @@ void vData_handler_initialise() {
 }
 
 void vSetDefault(void) {
+	
+	protected_printf("Data not found. Setting default values.\n");
+	
     vData_setHum_lower(0);
     vData_setHum_upper(95);
 
@@ -72,7 +79,7 @@ void write_eep(uint8_t address, uint8_t input) {
 
 void saveLimit(void *pvParameters) {
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 21600000 / portTICK_PERIOD_MS;
+    const TickType_t xFrequency = 43200000 / portTICK_PERIOD_MS;
 
     xLastWakeTime = xTaskGetTickCount();
 
@@ -80,7 +87,7 @@ void saveLimit(void *pvParameters) {
     {
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
-        protected_printf("Saving values");
+        protected_printf("EEPROM: Saving values");
         if (xSemaphoreTake(eep_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
 			
 			eeprom_write_byte((uint8_t*)0, xData_getId());
