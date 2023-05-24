@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <hih8129.h>
 #include <stdio.h>
 #include <stdarg.h>	//Used for varadic function
 #include <ATMEGA_FreeRTOS.h>
-#include "semphr.h"
+#include "../Headers/util.h"
 
 const char* mh_z19_returnCode_t_text[] = {
     "MHZ19_OK", 	/**< Everything went well */
