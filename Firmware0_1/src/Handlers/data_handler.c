@@ -29,12 +29,12 @@ void vData_handler_initialise() {
     }
 
     limit_t.id = id;
-    limit_t.co2_upper = read_eep(1);
-    limit_t.co2_lower = read_eep(2);
-    limit_t.hum_upper = read_eep(3);
-    limit_t.hum_lower = read_eep(4);
-    limit_t.temp_upper = read_eep(5);
-    limit_t.temp_lower = read_eep(6);
+    limit_t.co2_Upper = read_eep(1);
+    limit_t.co2_Lower = read_eep(2);
+    limit_t.hum_Upper = read_eep(3);
+    limit_t.hum_Lower = read_eep(4);
+    limit_t.temp_Upper = read_eep(5);
+    limit_t.temp_Lower = read_eep(6);
 }
 
 void vSetDefault(void) {
@@ -72,7 +72,7 @@ void saveLimit(void *pvParameters) {
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
         protected_printf("Saving values");
-        xSemaphoreTake(eep_mutex,pdMS_TO_TICKS(200))==pdTRUE {
+        if (xSemaphoreTake(eep_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
             EEPROM.write(0, xData_getId());
             EEPROM.write(1, xData_getCo2_upper());
             EEPROM.write(2, xData_getCo2_lower());
@@ -87,27 +87,28 @@ void saveLimit(void *pvParameters) {
 
 
 uint8_t xData_getCo2_upper(void) {
-    return limit_t.co2_upper;
+    return limit_t.co2_Upper;
 }
 
 uint8_t xData_getCo2_lower(void) {
-    return limit_t.co2_lower;
+    return limit_t.co2_Lower;
 }
 
 uint8_t xData_getHum_upper(void) {
-    return limit_t.hum_upper;
+    return limit_t.hum_Upper;
 }
 
 uint8_t xData_getHum_lower(void) {
-    return limit_t.hum_lower;
+    return limit_t.hum_Lower;
 }
 
 uint8_t xData_getTemp_upper(void) {
-    return limit_t.temp_upper;
+    return limit_t.temp_Upper;
 }
 
 uint8_t xData_getTemp_lower(void) {
-    return limit_t.temp_lower;
+    return limit_t.temp_Lower;
+	
 }
 
 uint8_t xData_getId() {
@@ -115,48 +116,48 @@ uint8_t xData_getId() {
 }
 
 void vData_setCo2_upper(uint8_t value) {
-    xSemaphoreTake(co2_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.co2_upper = value;
+    if (xSemaphoreTake(co2_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.co2_Upper = value;
 
         xSemaphoreGive(co2_mutex);
     }
 }
 
 void vData_setCo2_lower(uint8_t value) {
-    xSemaphoreTake(co2_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.co2_lower = value;
+    if (xSemaphoreTake(co2_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.co2_Lower = value;
 
         xSemaphoreGive(co2_mutex);
     }
 }
 
 void vData_setHum_upper(uint8_t value) {
-    xSemaphoreTake(hum_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.hum_upper = value;
+    if (xSemaphoreTake(hum_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.hum_Upper = value;
 
         xSemaphoreGive(hum_mutex);
     }
 }
 
 void vData_setHum_lower(uint8_t value) {
-    xSemaphoreTake(hum_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.hum_lower = value;
+    if (xSemaphoreTake(hum_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.hum_Lower = value;
 
         xSemaphoreGive(hum_mutex);
     }
 }
 
 void vData_setTemp_upper(uint8_t value) {
-    xSemaphoreTake(temp_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.temp_upper = value;
+   if (xSemaphoreTake(temp_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.temp_Upper = value;
 
         xSemaphoreGive(temp_mutex);
     }
 }
 
 void vData_setTemp_lower(uint8_t value) {
-    xSemaphoreTake(temp_mutex,pdMS_TO_TICKS(200))==pdTRUE {
-        limit_t.temp_lower = value;
+    if (xSemaphoreTake(temp_mutex,pdMS_TO_TICKS(200))==pdTRUE) {
+        limit_t.temp_Lower = value;
 
         xSemaphoreGive(temp_mutex);
     }

@@ -26,7 +26,7 @@
 // Needed for 7-segment driver initialization
 #include <display_7seg.h>
 
-logik_obj logik;
+
 float *data;
 
 // define semaphore handle

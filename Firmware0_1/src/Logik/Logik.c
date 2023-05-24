@@ -32,11 +32,11 @@ void humChecker(void *pvParameters){
 		printf("BOBB");
 		
 			
-		if (sensor_getHum() < logikObj.hum_Lower)
+		if (sensor_getHum() < xData_getHum_lower())
 		{
 			humidifier_Raise();
 		}
-		else if (sensor_getHum() > logikObj.hum_Upper)
+		else if (sensor_getHum() > xData_getHum_upper())
 		{
 			humidifier_Lower();
 		}
@@ -54,11 +54,11 @@ void co2Checker(void *pvParameters){
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 			
-		if (sensor_getCo2() < logikObj.co2_Lower)
+		if (sensor_getCo2() < xData_getCo2_lower())
 		{
 			startCo2Generator();
 		}
-		else if (sensor_getCo2() > logikObj.co2_Upper)
+		else if (sensor_getCo2() > xData_getCo2_upper())
 		{
 			startVentilation();
 		}
@@ -76,11 +76,11 @@ void tempChecker(void *pvParameters){
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 			
-		if (sensor_getTemp() < logikObj.temp_Lower)
+		if (sensor_getTemp() < xData_getTemp_lower())
 		{
 			ac_Raise();
 		}
-		else if (sensor_getTemp() > logikObj.temp_Upper)
+		else if (sensor_getTemp() > xData_getTemp_upper())
 		{
 			ac_Lower();
 		}
