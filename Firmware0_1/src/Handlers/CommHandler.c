@@ -6,10 +6,10 @@
 #include "../Headers/DownLinkValidator.h"
 #include "../Headers/CommHandler.h"
 #include <lora_driver.h>
+#include "../Headers/data_handler.h"
 
 SemaphoreHandle_t Mutex;
 
-extern float currentID;
 extern logik_obj logikObj;
 extern MessageBufferHandle_t downLinkMessageBufferHandle;
 
@@ -34,7 +34,7 @@ void sendData(void *pvParameters)
         uplink_payload.bytes[0] = sensor_getTemp();
         uplink_payload.bytes[1] = sensor_getCo2();
         uplink_payload.bytes[2] = sensor_getHum();
-        uplink_payload.bytes[3] = currentID;
+        uplink_payload.bytes[3] = xData_getId();
 
         // Sending uplink message
         lora_driver_sendUploadMessage(false, &uplink_payload);
@@ -71,13 +71,13 @@ void recieveData(void *pvParameters)
 
 			// Sets the values to the logikObj
 
-			logikObj.co2_Lower = downlinkPayload.bytes[2];
-			logikObj.co2_Upper = downlinkPayload.bytes[3];
-			logikObj.hum_Upper = downlinkPayload.bytes[4];
-			logikObj.hum_Lower = downlinkPayload.bytes[5];
-			logikObj.temp_Lower = downlinkPayload.bytes[0];
-			logikObj.temp_Upper = downlinkPayload.bytes[1];
-			currentID = downlinkPayload.bytes[6];
+			xData_setCo2_lower(downlinkPayload.bytes[2]);
+			xData_setCo2_upper(downlinkPayload.bytes[3]);
+			xData_setHum_lower(downlinkPayload.bytes[5]);
+			xData_setHum_upper(downlinkPayload.bytes[4]);
+			xData_setTemp_lower(downlinkPayload.bytes[0]);
+			xData_setTemp_upper(downlinkPayload.bytes[1]);
+			xData_setId(downlinkPayload.bytes[6]);
 		}
 	}
 }
