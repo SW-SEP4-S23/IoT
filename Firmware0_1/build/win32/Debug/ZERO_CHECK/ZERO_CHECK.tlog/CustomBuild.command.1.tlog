@@ -1,0 +1,10 @@
+^C:\USERS\JACOB\DESKTOP\SEP4\IOT\FIRMWARE0_1\BUILD\CMAKEFILES\DF6086BC56F4E0988CC9D9E4EA37D4FF\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/firmware_test -BC:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build/firmware_test.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

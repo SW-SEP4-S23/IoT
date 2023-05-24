@@ -41,7 +41,6 @@ void humChecker(void *pvParameters){
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
 		
-		printf("BOBB");
 		
 		if(xSemaphoreTake(Mutex,pdMS_TO_TICKS(200))==pdTRUE){
 			

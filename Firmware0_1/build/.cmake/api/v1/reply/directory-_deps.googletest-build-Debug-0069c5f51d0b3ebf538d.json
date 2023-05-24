@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "_deps/googletest-build",
+		"source" : "C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build/_deps/googletest-src"
+	}
+}
