@@ -8,45 +8,35 @@
 #include "../Headers/ModuleHandler.h"
 #include <util/delay.h>
 
+void write_7Segment(char value[]);
 
 void startCo2Generator(){
-	display_7seg_powerDown();
-	_delay_ms(1000);
-	display_7seg_powerUp();
-	display_7seg_displayHex("1");
+	write_7Segment("1");
 }
 
 void startVentilation(){
-	display_7seg_powerDown();
-	_delay_ms(1000);
-	display_7seg_powerUp();
-	display_7seg_displayHex("2");
+	write_7Segment("2");
 }
 
 void humidifier_Lower(){
-	display_7seg_powerDown();
-	_delay_ms(1000);
-	display_7seg_powerUp();
-	display_7seg_displayHex("3");	
+	write_7Segment("3");
 }
 
 void humidifier_Raise(){
-	display_7seg_powerDown();
-	_delay_ms(1000);
-	display_7seg_powerUp();
-	display_7seg_displayHex("4");
+	write_7Segment("4");
 }
 
 void ac_Raise(){
-	display_7seg_powerDown();
-	_delay_ms(1000);
-	display_7seg_powerUp();
-	display_7seg_displayHex("5");
+	write_7Segment("5");
 }
 
 void ac_Lower(){
+	write_7Segment("6");
+}
+
+void write_7Segment(char value[]) {
 	display_7seg_powerDown();
 	_delay_ms(1000);
 	display_7seg_powerUp();
-	display_7seg_displayHex("6");
+	display_7seg_displayHex(value);
 }
