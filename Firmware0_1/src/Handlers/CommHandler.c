@@ -1,15 +1,12 @@
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
+#include <lora_driver.h>
 #include "../Headers/Logik.h"
 #include "../Headers/SensorReading.h"
 #include "../Headers/DownLinkValidator.h"
 #include "../Headers/CommHandler.h"
-#include <lora_driver.h>
 #include "../Headers/data_handler.h"
-
-SemaphoreHandle_t Mutex;
-
 
 extern MessageBufferHandle_t downLinkMessageBufferHandle;
 
@@ -65,19 +62,19 @@ void recieveData(void *pvParameters)
 
 			if (validateDownlink(downlinkPayload.bytes[4], downlinkPayload.bytes[5], downlinkPayload.bytes[2], downlinkPayload.bytes[3], downlinkPayload.bytes[0], downlinkPayload.bytes[1], downlinkPayload.bytes[6]) == 0)
 			{
-				// if not, returns 1
-				return 1;
+				// if not, returns
+				return;
 			}
 
 			// Sets the values to the logikObj
 
-			xData_setCo2_lower(downlinkPayload.bytes[2]);
-			xData_setCo2_upper(downlinkPayload.bytes[3]);
-			xData_setHum_lower(downlinkPayload.bytes[5]);
-			xData_setHum_upper(downlinkPayload.bytes[4]);
-			xData_setTemp_lower(downlinkPayload.bytes[0]);
-			xData_setTemp_upper(downlinkPayload.bytes[1]);
-			xData_setId(downlinkPayload.bytes[6]);
+			vData_setCo2_lower(downlinkPayload.bytes[2]);
+			vData_setCo2_upper(downlinkPayload.bytes[3]);
+			vData_setHum_lower(downlinkPayload.bytes[5]);
+			vData_setHum_upper(downlinkPayload.bytes[4]);
+			vData_setTemp_lower(downlinkPayload.bytes[0]);
+			vData_setTemp_upper(downlinkPayload.bytes[1]);
+			vData_setId(downlinkPayload.bytes[6]);
 		}
 	}
 }
