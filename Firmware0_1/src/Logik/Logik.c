@@ -1,4 +1,3 @@
-
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
@@ -28,9 +27,6 @@ void humChecker(void *pvParameters){
 	
 	for(;;){
 		xTaskDelayUntil(&xLastWakeTime, xFrequency);
-		
-		printf("BOBB");
-		
 			
 		if (sensor_getHum() < xData_getHum_lower())
 		{
