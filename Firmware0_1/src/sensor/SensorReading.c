@@ -3,6 +3,7 @@
 #include <util/delay.h>
 #include <mh_z19.h>
 #include <hih8120.h>
+#include "../Headers/util.h"
 
 #include "../Headers/SensorReading.h"
 
@@ -10,7 +11,7 @@ void sensor_wakeUp(void)
 {
     hih8120_driverReturnCode_t wake_rc = hih8120_wakeup();
 
-    printf("HIH8120 Wake up status: %c\n", (char)wake_rc);
+	protected_printf("HIH8120 Wake up status: %c\n", hih8120_xReturnCodes_to_text(wake_rc))
 }
 
 float sensor_getTemp(void){
@@ -47,7 +48,7 @@ float sensor_getCo2(void){
 	
 	mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
 
-	printf("MH_Z19 Measure status: %c\n", co2_rc);
+	protected_printf("MH_Z19 Measure status: %c\n", mh_z19_xReturnCodes_to_text(co2_rc));
 
 	uint16_t ppm;
 	mh_z19_getCo2Ppm(&ppm);
