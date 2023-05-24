@@ -1,4 +1,5 @@
 #include "../Headers/data_handler.h"
+#include "../Headers/util.h"
 
 extern SemaphoreHandle_t hum_mutex;
 extern SemaphoreHandle_t temp_mutex;
@@ -68,7 +69,7 @@ void saveLimit(void *pvParameters) {
     {
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
 
-        puts("Saving values");
+        protected_printf("Saving values");
         xSemaphoreTake(eep_mutex,pdMS_TO_TICKS(200))==pdTRUE {
             EEPROM.write(0, xData_getId());
             EEPROM.write(1, xData_getCo2_upper());
