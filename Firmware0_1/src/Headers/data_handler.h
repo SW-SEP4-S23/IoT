@@ -4,9 +4,8 @@
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
+#include <EEPROM.h>
 #include <stdint.h>
-#include "../EEPROM/src/EEPROM.h"
-
 
 void vData_handler_initialise();
 

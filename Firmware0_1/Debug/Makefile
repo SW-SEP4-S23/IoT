@@ -40,13 +40,11 @@ SUBDIRS :=  \
 ../FreeRTOS/FreeRTOSTraceDriver/ \
 ../FreeRTOS/src/ \
 ../src/ \
-../src/EEPROM/ \
-../src/EEPROM/src/ \
 ../src/Handlers/ \
 ../src/Headers/ \
 ../src/Logik/ \
 ../src/sensor/ \
-../src/util/
+../src/Validator/
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -63,14 +61,12 @@ C_SRCS +=  \
 ../FreeRTOS/src/timers.c \
 ../FreeRTOS/src/variantHooks.c \
 ../src/Handlers/CommHandler.c \
-../src/Handlers/data_handler.c \
 ../src/Handlers/ModuleHandler.c \
 ../src/Logik/Logik.c \
 ../src/LoRaWANHandler.c \
 ../src/main.c \
 ../src/sensor/SensorReading.c \
-../src/util/DownLinkValidator.c \
-../src/util/util.c
+../src/Validator/DownLinkValidator.c
 
 
 PREPROCESSING_SRCS += 
@@ -92,14 +88,12 @@ FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 src/Handlers/CommHandler.o \
-src/Handlers/data_handler.o \
 src/Handlers/ModuleHandler.o \
 src/Logik/Logik.o \
 src/LoRaWANHandler.o \
 src/main.o \
 src/sensor/SensorReading.o \
-src/util/DownLinkValidator.o \
-src/util/util.o
+src/Validator/DownLinkValidator.o
 
 OBJS_AS_ARGS +=  \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.o \
@@ -114,14 +108,12 @@ FreeRTOS/src/tasks.o \
 FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 src/Handlers/CommHandler.o \
-src/Handlers/data_handler.o \
 src/Handlers/ModuleHandler.o \
 src/Logik/Logik.o \
 src/LoRaWANHandler.o \
 src/main.o \
 src/sensor/SensorReading.o \
-src/util/DownLinkValidator.o \
-src/util/util.o
+src/Validator/DownLinkValidator.o
 
 C_DEPS +=  \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.d \
@@ -136,14 +128,12 @@ FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 src/Handlers/CommHandler.d \
-src/Handlers/data_handler.d \
 src/Handlers/ModuleHandler.d \
 src/Logik/Logik.d \
 src/LoRaWANHandler.d \
 src/main.d \
 src/sensor/SensorReading.d \
-src/util/DownLinkValidator.d \
-src/util/util.d
+src/Validator/DownLinkValidator.d
 
 C_DEPS_AS_ARGS +=  \
 FreeRTOS/FreeRTOSTraceDriver/FreeRTOSTraceDriver.d \
@@ -158,14 +148,12 @@ FreeRTOS/src/tasks.d \
 FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 src/Handlers/CommHandler.d \
-src/Handlers/data_handler.d \
 src/Handlers/ModuleHandler.d \
 src/Logik/Logik.d \
 src/LoRaWANHandler.d \
 src/main.d \
 src/sensor/SensorReading.d \
-src/util/DownLinkValidator.d \
-src/util/util.d
+src/Validator/DownLinkValidator.d
 
 OUTPUT_FILE_PATH +=Firmware0_1.elf
 
@@ -265,13 +253,6 @@ src/Handlers/CommHandler.o: ../src/Handlers/CommHandler.c
 	@echo Finished building: $<
 	
 
-src/Handlers/data_handler.o: ../src/Handlers/data_handler.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 src/Handlers/ModuleHandler.o: ../src/Handlers/ModuleHandler.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
@@ -307,14 +288,7 @@ src/sensor/SensorReading.o: ../src/sensor/SensorReading.c
 	@echo Finished building: $<
 	
 
-src/util/DownLinkValidator.o: ../src/util/DownLinkValidator.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/util/util.o: ../src/util/util.c
+src/Validator/DownLinkValidator.o: ../src/Validator/DownLinkValidator.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\include" -I"../drivers" -I"../FreeRTOS/src"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

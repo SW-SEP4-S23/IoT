@@ -288,22 +288,13 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EEPROM\src\EEPROM.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\Handlers\CommHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Handlers\data_handler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Handlers\ModuleHandler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\CommHandler.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Headers\data_handler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Headers\DownLinkValidator.h">
@@ -318,9 +309,6 @@
     <Compile Include="src\Headers\SensorReading.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Headers\util.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\Logik\Logik.c">
       <SubType>compile</SubType>
     </Compile>
@@ -333,10 +321,7 @@
     <Compile Include="src\sensor\SensorReading.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\util\DownLinkValidator.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\util\util.c">
+    <Compile Include="src\Validator\DownLinkValidator.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -348,13 +333,11 @@
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
     <Folder Include="src\" />
-    <Folder Include="src\EEPROM\" />
-    <Folder Include="src\EEPROM\src\" />
     <Folder Include="src\Handlers\" />
     <Folder Include="src\Headers\" />
     <Folder Include="src\Logik\" />
     <Folder Include="src\sensor\" />
-    <Folder Include="src\util\" />
+    <Folder Include="src\Validator\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">
@@ -406,15 +389,6 @@
       <SubType>compile</SubType>
     </None>
     <None Include="FreeRTOS\src\LICENSE.md">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\EEPROM\keywords.txt">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\EEPROM\library.properties">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\EEPROM\README.md">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>

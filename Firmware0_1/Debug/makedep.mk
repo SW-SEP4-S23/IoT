@@ -26,8 +26,6 @@ FreeRTOS\src\variantHooks.c
 
 src\Handlers\CommHandler.c
 
-src\Handlers\data_handler.c
-
 src\Handlers\ModuleHandler.c
 
 src\Logik\Logik.c
@@ -38,7 +36,5 @@ src\main.c
 
 src\sensor\SensorReading.c
 
-src\util\DownLinkValidator.c
-
-src\util\util.c
+src\Validator\DownLinkValidator.c
 
