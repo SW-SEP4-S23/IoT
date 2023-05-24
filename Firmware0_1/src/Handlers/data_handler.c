@@ -6,6 +6,8 @@ extern SemaphoreHandle_t temp_mutex;
 extern SemaphoreHandle_t co2_mutex;
 extern SemaphoreHandle_t eep_mutex;
 
+void saveLimit(void *pvParameters);
+
 typedef struct {
 	uint8_t co2_Upper;
 	uint8_t co2_Lower;
@@ -158,6 +160,10 @@ void vData_setTemp_lower(uint8_t value) {
 
         xSemaphoreGive(temp_mutex);
     }
+}
+
+void xData_setId(uint8_t value) {
+    limit_t.id = value;
 }
 
 void data_vTaskCreate(void)

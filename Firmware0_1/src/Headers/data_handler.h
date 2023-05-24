@@ -25,5 +25,6 @@ void xData_setHum_upper(uint8_t value);
 void xData_setHum_lower(uint8_t value);
 void xData_setTemp_upper(uint8_t value);
 void xData_setTemp_lower(uint8_t value);
+void xData_setId(uint8_t value);
 
 #endif  // DATA_HANDLER_H
