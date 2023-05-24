@@ -34,6 +34,7 @@ SemaphoreHandle_t hum_mutex;
 SemaphoreHandle_t temp_mutex;
 SemaphoreHandle_t co2_mutex;
 SemaphoreHandle_t eep_mutex;
+SemaphoreHandle_t printMutex;
 
 MessageBufferHandle_t downLinkMessageBufferHandle;
 
@@ -46,23 +47,24 @@ void create_tasks_and_semaphores(void)
     // Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
     // because it is sharing a resource, such as the Serial port.
     // Semaphores should only be used whilst the scheduler is running, but we can set it up here.
-    create_mutex(hum_mutex);
-	create_mutex(temp_mutex);
-	create_mutex(co2_mutex);
-    create_mutex(eep_mutex);
+    create_mutex(&hum_mutex);
+	create_mutex(&temp_mutex);
+	create_mutex(&co2_mutex);
+    create_mutex(&eep_mutex);
+	create_mutex(&printMutex);
 
     comm_vTaskCreate();
     data_vTaskCreate();
 	initialise();
 }
 
-void create_mutex(SemaphoreHandle_t mutex) {
-	if (mutex == NULL) // Check to confirm that the Semaphore has not already been created.
+void create_mutex(SemaphoreHandle_t* mutex) {
+	if (*mutex == NULL) // Check to confirm that the Semaphore has not already been created.
 	{
-		mutex = xSemaphoreCreateMutex(); // Create a mutex semaphore.
-		if ((mutex) != NULL)
+		*mutex = xSemaphoreCreateMutex(); // Create a mutex semaphore.
+		if ((*mutex) != NULL)
 		{
-			xSemaphoreGive((mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
+			xSemaphoreGive((*mutex)); // Make the mutex available for use, by initially "Giving" the Semaphore.
 		}
 	}
 }
