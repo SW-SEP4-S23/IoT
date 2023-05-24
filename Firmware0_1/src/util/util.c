@@ -35,6 +35,6 @@ void protected_printf(const char* _fmt, ...)
 	va_start(_arg, _fmt);
 
 	xSemaphoreTake(printMutex, portMAX_DELAY);
-	vprintf(_fmt, _arg);
+	vprintf(_fmt + "\n", _arg);
 	xSemaphoreGive(printMutex);
 }
