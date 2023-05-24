@@ -3,16 +3,32 @@
 ## Interface
 
 Max payload size is at 20 bytes excluding the header.
-Without the header it is at 14 bytes.
 
-Total of 14 bytes can be sent up or back at once.
-Currently using 3.
+The header is at 20 bytes. It is not sent with downlink, only uplink.  
+Sending more than two uplinks in the span of 5 minutes will severely increase the next  
+uplink message delay
 
+Total of 20 bytes can be sent up or back at once.
+Currently using 10.
+
+### Uplink - 4 bytes
 | Type  | Description | Position | Size   |
 | ----- | ----------- | -------- | ------ |
-| Float | Temperature | 0        | 1 byte |
-| Float | CO2         | 1        | 1 byte |
-| Float | Humidity    | 2        | 1 byte |
+| Float | Temp C      | 0        | 1 byte |
+| Float | CO2 % ppm   | 1        | 1 byte |
+| Float | Hum RH %    | 2        | 1 byte |
+| int   | ID          | 3        | 1 byte |
+
+### Downlink - 6 bytes
+| Type  | Description | Position | Size   |
+| ----- | ----------- | -------- | ------ |
+| Float | TempMax     | 0        | 1 byte |
+| Float | CO2Max      | 1        | 1 byte |
+| Float | HumMax      | 2        | 1 byte |
+| Float | TempMin     | 3        | 1 byte |
+| Float | CO2Min      | 4        | 1 byte |
+| Float | HumMin      | 5        | 1 byte |
+| int   | ID          | 6        | 1 byte |
 
 ## Setup
 

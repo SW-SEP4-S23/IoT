@@ -1,54 +1,84 @@
-/*
- * CFile1.c
- *
- * Created: 12/05/2023 10.39.45
- *  Author: jacob
- */
-
+#include <ATMEGA_FreeRTOS.h>
+#include <task.h>
+#include <semphr.h>
 #include "../Headers/Logik.h"
-#include "../Headers/7segmentHandler.h"
+#include "../Headers/ModuleHandler.h"
 #include "../Headers/SensorReading.h"
-#include <util/delay.h>
+#include "../Headers/data_handler.h"
 
-float *data;
+void co2Checker(void *pvParameters);
+void tempChecker(void *pvParameters);
+void humChecker(void *pvParameters);
 
-void raiseLowerFunc()
-{
+
+void initialise(void){
+	xTaskCreate(humChecker, "HumChecker", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+	xTaskCreate(co2Checker, "Co2Checker", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+	xTaskCreate(tempChecker, "TempChecker", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+}
+
+
+void humChecker(void *pvParameters){
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+	xLastWakeTime = xTaskGetTickCount();
 	
-	logik_sensor testing;
-
-	sensor_getSensorData(data);
-
-	for (;;)
-	{
-
-		_delay_ms(6000);
-
-		if (data[1] < testing.lowTemp)
+	
+	
+	for(;;){
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+			
+		if (sensor_getHum() < xData_getHum_lower())
 		{
-			return_temp_raised();
+			humidifier_Raise();
 		}
-		else if (data[1] > testing.maxTemp)
+		else if (sensor_getHum() > xData_getHum_upper())
 		{
-			return_temp_lowered();
+			humidifier_Lower();
 		}
+	}
+	
+}
 
-		if (data[2] < testing.lowCo2)
-		{
-			return return_co2_raised();
-		}
-		else if (data[2] > testing.maxCo2)
-		{
-			return_co2_lowered();
-		}
 
-		if (data[0] < testing.lowHum)
+void co2Checker(void *pvParameters){
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+
+	xLastWakeTime = xTaskGetTickCount();
+	
+	for(;;){
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+			
+		if (sensor_getCo2() < xData_getCo2_lower())
 		{
-			return_humid_raised();
+			startCo2Generator();
 		}
-		else if (data[0] > testing.maxHum)
+		else if (sensor_getCo2() > xData_getCo2_upper())
 		{
-			return_humid_lowered();
+			startVentilation();
+		}
+	}
+	
+}
+	
+
+void tempChecker(void *pvParameters){
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 60000 / portTICK_PERIOD_MS;
+
+	xLastWakeTime = xTaskGetTickCount();
+	
+	for(;;){
+		xTaskDelayUntil(&xLastWakeTime, xFrequency);
+			
+		if (sensor_getTemp() < xData_getTemp_lower())
+		{
+			ac_Raise();
+		}
+		else if (sensor_getTemp() > xData_getTemp_upper())
+		{
+			ac_Lower();
 		}
 	}
 }
