@@ -1,5 +1,0 @@
-add_test([=[SimpleTest.enLigmedEn]=]  C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build/Debug/firmware_test.exe [==[--gtest_filter=SimpleTest.enLigmedEn]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[SimpleTest.enLigmedEn]=]  PROPERTIES WORKING_DIRECTORY C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[startCo2Generator_test.init_co2Generator]=]  C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build/Debug/firmware_test.exe [==[--gtest_filter=startCo2Generator_test.init_co2Generator]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[startCo2Generator_test.init_co2Generator]=]  PROPERTIES WORKING_DIRECTORY C:/Users/jacob/Desktop/Sep4/IoT/Firmware0_1/build SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set(  firmware_test_TESTS SimpleTest.enLigmedEn startCo2Generator_test.init_co2Generator)
