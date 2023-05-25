@@ -29,7 +29,7 @@ protected:
 	RESET_FAKE(display_7seg_displayHex);
     RESET_FAKE(display_7seg_powerUp);
     RESET_FAKE(display_7seg_powerDown);  
-		FFF_RESET_HISTORY();
+	FFF_RESET_HISTORY();
 	}
 	void TearDown() override
 	{}
