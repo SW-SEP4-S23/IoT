@@ -6,7 +6,8 @@
  */ 
 #include <display_7seg.h>
 #include "../Headers/ModuleHandler.h"
-#include <util/delay.h>
+#include <ATMEGA_FreeRTOS.h>
+
 
 void write_7Segment(char value[]);
 
