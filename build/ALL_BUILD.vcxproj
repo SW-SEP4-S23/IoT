@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -89,7 +89,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -99,7 +99,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\drivers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\..\Firmware0_1\src\Headers;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\MockHFiles;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\fff;C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>

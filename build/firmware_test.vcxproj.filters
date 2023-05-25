@@ -4,22 +4,17 @@
     <ClCompile Include="C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\jacob\Desktop\Sep4\IoT\Firmware0_1\src\Handlers\ModuleHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\FreeRTOS_defs\FreeRTOS_FFF_MocksDefinitions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\jacob\Desktop\Sep4\IoT\Firmware0_1\src\Headers\ModuleHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="C:\Users\jacob\Desktop\Sep4\IoT\firmware_test\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{5664AF61-0090-3640-B5DA-B4A0F5063CA6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{168036AA-EC61-3950-8207-28D0F595D97F}</UniqueIdentifier>
     </Filter>
