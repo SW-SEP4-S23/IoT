@@ -1,1 +1,3 @@
-int validateDownlink(float hum_lower, float hum_upper, float co2_lower, float co2_upper, float temp_lower, float temp_upper, float id);
+#include <ATMEGA_FreeRTOS.h>
+
+int validateDownlink(uint8_t hum_lower, uint8_t hum_upper, uint8_t co2_lower, uint8_t co2_upper, uint8_t temp_lower, uint8_t temp_upper, uint8_t id);
