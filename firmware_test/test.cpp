@@ -5,7 +5,7 @@
 extern "C"
 {
 #include "ModuleHandler.h"
-#include "../Firmware0_1/drivers/display_7seg.h"
+#include "display_7seg.h"
 
 }
 
