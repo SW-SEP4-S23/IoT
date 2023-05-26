@@ -20,7 +20,7 @@ FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
     test.cpp
-    ../Firmware0_1/src/Handlers/ModuleHandler.c
+    Firmware0_1/src/Handlers/ModuleHandler.c
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
     ${SRCS}
 )
