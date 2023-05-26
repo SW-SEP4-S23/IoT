@@ -19,7 +19,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
-    test.cpp
+    LogikTest.cpp
+    ModuleHandlerTest.cpp
     ../Firmware0_1/src/Handlers/ModuleHandler.c
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
     ${SRCS}
@@ -29,7 +30,6 @@ set(SOURCES_TEST
 include_directories(
   ../Firmware0_1/drivers
   ../Firmware0_1/src/Headers
-  MockHFiles
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
 )

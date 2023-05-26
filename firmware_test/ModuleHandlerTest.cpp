@@ -6,22 +6,18 @@ extern "C"
 {
 #include "ModuleHandler.h"
 #include "display_7seg.h"
-
 }
 
-TEST(SimpleTest, enLigmedEn)
-{
-EXPECT_EQ(1,1);
-}
 
 FAKE_VOID_FUNC(display_7seg_displayHex, char *);
 FAKE_VOID_FUNC(display_7seg_powerDown);
 FAKE_VOID_FUNC(display_7seg_powerUp);
 
 
-//FAKE_VOID_FUNC(startCo2Generator);
 
-class startCo2Generator_test : public ::testing::Test
+
+
+class ModuleHandler_Test : public ::testing::Test
 {
 protected:
 	void SetUp() override
@@ -35,11 +31,13 @@ protected:
 	{}
 };
 
-TEST(startCo2Generator_test, init_co2Generator){
+//Denne test er fortaget for at se om de tre metoder vi bruger fra display7seg.h bliver kaldt gennem vores egne metoder fra ModuleHandler.c
+TEST(ModuleHandler_Test, init_co2Generator){
 startCo2Generator();
 EXPECT_EQ(display_7seg_powerDown_fake.call_count,1);
 EXPECT_EQ(display_7seg_powerUp_fake.call_count,1);
 EXPECT_EQ(display_7seg_displayHex_fake.call_count,1);
-
 }
+
+
 
