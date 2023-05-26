@@ -20,15 +20,15 @@ FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
     test.cpp
-    Firmware0_1/src/Handlers/ModuleHandler.c
+    ../Firmware0_1/src/Handlers/ModuleHandler.c
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
     ${SRCS}
 )
 
 # This makes the test.cpp files able to #include target libraries without errors.  
 include_directories(
-  Firmware0_1/drivers
-  Firmware0_1/src/Headers
+  ../Firmware0_1/drivers
+  ../Firmware0_1/src/Headers
   MockHFiles
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
