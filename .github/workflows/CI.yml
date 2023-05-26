@@ -23,7 +23,7 @@ jobs:
       run: |
         cmake -B ./build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         sudo ls
-        cd /Firmware0_1
+        cd Firmware0_1
         sudo ls
 
     - name: Build
