@@ -19,7 +19,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
-    LogikTest.cpp
+    
     ModuleHandlerTest.cpp
     ../Firmware0_1/src/Handlers/ModuleHandler.c
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp

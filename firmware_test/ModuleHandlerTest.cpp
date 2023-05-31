@@ -8,14 +8,9 @@ extern "C"
 #include "display_7seg.h"
 }
 
-
 FAKE_VOID_FUNC(display_7seg_displayHex, char *);
 FAKE_VOID_FUNC(display_7seg_powerDown);
 FAKE_VOID_FUNC(display_7seg_powerUp);
-
-
-
-
 
 class ModuleHandler_Test : public ::testing::Test
 {

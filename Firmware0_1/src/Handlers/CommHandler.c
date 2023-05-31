@@ -8,6 +8,7 @@
 #include "../Headers/CommHandler.h"
 #include "../Headers/data_handler.h"
 
+
 extern MessageBufferHandle_t downLinkMessageBufferHandle;
 
 void sendData(void *pvParameters)
@@ -56,17 +57,12 @@ void recieveData(void *pvParameters)
 		xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora_driver_payload_t), portMAX_DELAY);
 		if (6 < downlinkPayload.len)
 		{
-
 			// Checks if all the numbers are validated
-
 			if (validateDownlink(downlinkPayload.bytes[4], downlinkPayload.bytes[5], downlinkPayload.bytes[2], downlinkPayload.bytes[3], downlinkPayload.bytes[0], downlinkPayload.bytes[1], downlinkPayload.bytes[6]) == 0)
 			{
 				// if not, returns
 				return;
 			}
-
-			// Sets the values to the logikObj
-
 			vData_setCo2_lower(downlinkPayload.bytes[2]);
 			vData_setCo2_upper(downlinkPayload.bytes[3]);
 			vData_setHum_lower(downlinkPayload.bytes[5]);

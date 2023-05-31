@@ -36,8 +36,7 @@ void humChecker(void *pvParameters){
 		{
 			humidifier_Lower();
 		}
-	}
-	
+	}	
 }
 
 
