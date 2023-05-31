@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdio_driver.h>
-#include <util/delay.h>
+#include <ATMEGA_FreeRTOS.h>
 #include <mh_z19.h>
 #include <hih8120.h>
 #include "../Headers/util.h"
@@ -32,13 +32,13 @@ void sensor_wakeUp(void)
 uint8_t sensor_getTemp(void) {
 	sensor_wakeUp();
 
-	_delay_ms(60);
+	vTaskDelay(pdMS_TO_TICKS(60UL));
 
 	hih8120_measure();
 
 	 while (!(hih8120_isReady())) {
 
-		 _delay_ms(60);
+		vTaskDelay(pdMS_TO_TICKS(60UL));
 	 }
 	 return( hih8120_getTemperature());
 }
@@ -48,13 +48,13 @@ uint8_t sensor_getHum(void) {
 
 	sensor_wakeUp();
 
-	_delay_ms(60);
+	vTaskDelay(pdMS_TO_TICKS(60UL));
 
 	hih8120_measure();
 
 	while (!(hih8120_isReady())) {
 
-		_delay_ms(60);
+		vTaskDelay(pdMS_TO_TICKS(60UL));
 	}
 	return( hih8120_getHumidity());
 }
@@ -62,6 +62,8 @@ uint8_t sensor_getHum(void) {
 uint16_t sensor_getCo2(void){
 	
 	mh_z19_returnCode_t co2_rc = mh_z19_takeMeassuring();
+
+	vTaskDelay(pdMS_TO_TICKS(100UL));
 
 	protected_printf("MH_Z19 Measure status: >%s<\n", mh_z19_xReturnCodes_to_text(co2_rc));
 

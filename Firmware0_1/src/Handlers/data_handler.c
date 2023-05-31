@@ -4,6 +4,7 @@
 #include "../Headers/data_handler.h"
 #include "../Headers/util.h"
 
+
 extern SemaphoreHandle_t hum_mutex;
 extern SemaphoreHandle_t temp_mutex;
 extern SemaphoreHandle_t co2_mutex;

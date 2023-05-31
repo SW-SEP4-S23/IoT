@@ -19,15 +19,17 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest )
 
 set(SOURCES_TEST
-#    test_co2.cpp
+    
+    ModuleHandlerTest.cpp
+    ../Firmware0_1/src/Handlers/ModuleHandler.c
     FreeRTOS_defs/FreeRTOS_FFF_MocksDefinitions.cpp
     ${SRCS}
 )
 
 # This makes the test.cpp files able to #include target libraries without errors.  
 include_directories(
-  ../Firmware0_1
   ../Firmware0_1/drivers
+  ../Firmware0_1/src/Headers
   fff
   FreeRTOS_defs  # Mock and FreeRTOS definitions
 )

@@ -6,7 +6,8 @@
  */ 
 #include <display_7seg.h>
 #include "../Headers/ModuleHandler.h"
-#include <util/delay.h>
+#include <ATMEGA_FreeRTOS.h>
+
 
 void write_7Segment(char value[]);
 
@@ -36,7 +37,7 @@ void ac_Lower(){
 
 void write_7Segment(char value[]) {
 	display_7seg_powerDown();
-	_delay_ms(1000);
+	vTaskDelay(pdMS_TO_TICKS(200UL));
 	display_7seg_powerUp();
 	display_7seg_displayHex(value);
 }
