@@ -14,12 +14,6 @@ void sensor_initialise(void) {
 	mh_z19_initialise(ser_USART3);
 	hih8120_driverReturnCode_t rc = hih8120_initialise();
 	protected_printf("HIH8120 initialisation >%s<\n", hih8120_xReturnCodes_to_text(rc));
-
-	mh_z19_injectCallBack(co2_callBack);
-}
-
-void co2_callBack(void) {
-	protected_printf("CO2 value read as: %d\n", ppm);
 }
 
 void sensor_wakeUp(void)
